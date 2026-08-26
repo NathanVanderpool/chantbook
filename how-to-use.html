@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#f6efe1;color:#4a3b2b;font-family:'EB Garamond',serif;font-size:18px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;opacity:.05;z-index:60;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");}
+a{color:#cf6038;text-decoration:none;}a:hover{color:#a8451f;}
+p,h1,h2,h3{text-wrap:pretty;margin:0;}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column;">
+<header style="text-align:center;padding:36px 24px 0;">
+  <img src="assets/agapic-logo.jpg" alt="Agapic Chants" style="width:76px;height:76px;object-fit:cover;border-radius:50%;display:block;margin:0 auto 12px;" />
+  <div style="font-size:15px;letter-spacing:.16em;text-transform:uppercase;color:#7d6a51;">Agapic Chants · Chantbook</div>
+  <div style="margin-top:10px;font-size:15px;"><a href="index.html">← All chants</a></div>
+</header>
+<section style="background:#efe4d0;margin-top:36px;padding:44px 24px 48px;">
+  <div style="max-width:760px;margin:0 auto;">
+    <h1 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(36px,4.2vw,54px);line-height:1.12;color:#2f2419;">How to use this book</h1>
+    <p style="color:#5c4b38;margin-top:14px;max-width:620px;">Every chant page is a small learning room. You can just listen and sing — or go as deep as learning your own line in a three-part harmony. Here is everything you'll find inside.</p>
+  </div>
+</section>
+<main style="max-width:760px;margin:0 auto;width:100%;padding:48px 24px 72px;box-sizing:border-box;flex:1;">
+  <div style="display:flex;flex-direction:column;gap:44px;">
+    <div style="display:flex;gap:20px;align-items:flex-start;">
+      <div style="flex:0 0 auto;width:44px;height:44px;border-radius:50%;background:#cf6038;color:#fbf6ec;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:22px;">1</div>
+      <div>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:28px;color:#2f2419;">Listen and sing</h2>
+        <p style="color:#5c4b38;margin-top:8px;">Press play at the top of a chant page to hear the studio recording. Just below it sits the attentional instruction — a small note on where to put your attention while you sing. That's the heart of a chant: the words are simple on purpose, so your attention can do the work.</p>
+      </div>
+    </div>
+    <div style="display:flex;gap:20px;align-items:flex-start;">
+      <div style="flex:0 0 auto;width:44px;height:44px;border-radius:50%;background:#cf6038;color:#fbf6ec;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:22px;">2</div>
+      <div>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:28px;color:#2f2419;">Pick your instrument</h2>
+        <p style="color:#5c4b38;margin-top:8px;">The 🎤 microphone is the simplest view — just the words. Press the guitar, ukulele, or piano button instead and the page becomes a play-along sheet: chord names appear over the lyrics with chord boxes showing the shapes — turn on "Chord boxes everywhere" to see a small diagram beside every chord as it appears. The page also suggests friendly ways to play: open shapes for beginners, or a capo position that matches the recording exactly.</p>
+      </div>
+    </div>
+    <div style="display:flex;gap:20px;align-items:flex-start;">
+      <div style="flex:0 0 auto;width:44px;height:44px;border-radius:50%;background:#cf6038;color:#fbf6ec;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:22px;">3</div>
+      <div>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:28px;color:#2f2419;">Change the key</h2>
+        <p style="color:#5c4b38;margin-top:8px;">Every voice is different. Tap − or + on the key control and the whole page follows: the chords over the words, the chord boxes, even the practice player all move to the key you choose. Sing where your voice is comfortable — the chant doesn't mind.</p>
+      </div>
+    </div>
+    <div style="display:flex;gap:20px;align-items:flex-start;">
+      <div style="flex:0 0 auto;width:44px;height:44px;border-radius:50%;background:#cf6038;color:#fbf6ec;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:22px;">4</div>
+      <div>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:28px;color:#2f2419;">Learn a harmony</h2>
+        <p style="color:#5c4b38;margin-top:8px;">Many chants live in three-part harmony — a melody and two harmonies. The practice player plays all three, each in its own color, with the word being sung shown beneath. Mute the parts you don't want, slow the tempo down while you learn, drag the notes left or right to replay any phrase, and tap 8va on any voice to hear it an octave lower. When your line sits in your ear, speed back up, add the others back in, and sing yours against them.</p>
+      </div>
+    </div>
+    <div style="display:flex;gap:20px;align-items:flex-start;">
+      <div style="flex:0 0 auto;width:44px;height:44px;border-radius:50%;background:#cf6038;color:#fbf6ec;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:22px;">5</div>
+      <div>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:28px;color:#2f2419;">Take it with you</h2>
+        <p style="color:#5c4b38;margin-top:8px;">Each chant has a print sheet — one page with the words, chords, and attentional instruction, ready for a music stand or a circle of friends. It follows you: whatever key you've chosen, and chord boxes if you've turned them on, print exactly as you set them. The chants are free to sing and share under the <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0 license</a>.</p>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:56px;text-align:center;">
+    <a href="sanctuary.html" style="display:inline-block;background:#cf6038;color:#fbf6ec;border-radius:8px;font-family:'Cormorant Garamond',serif;font-size:22px;padding:13px 30px;transition:background 180ms;" style-hover="background:#a8451f;color:#fbf6ec;">Try it with Sanctuary →</a>
+  </div>
+</main>
+<footer style="background:#efe4d0;padding:56px 24px;">
+  <div style="max-width:820px;margin:0 auto;text-align:center;">
+    <p style="font-size:17px;color:#5c4b38;font-style:italic;">These chants were made with people, in rooms. <a href="https://agapicchants.com" target="_blank" rel="noopener" style="font-style:normal;">agapicchants.com →</a></p>
+    <p style="margin-top:10px;font-size:16px;color:#6f5f4a;"><a href="index.html">← All chants</a> · Free to sing &amp; share</p>
+    <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener" style="display:inline-block;margin-top:12px;"><img src="assets/cc-by-nc.svg" alt="CC BY-NC 4.0" style="height:28px;display:block;opacity:.85;" /></a>
+  </div>
+</footer>
+</div>
+</x-dc>
+</body>
+</html>

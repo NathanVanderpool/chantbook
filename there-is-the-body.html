@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400;1,500&amp;family=EB+Garamond:ital,wght@0,400;0,500;1,400&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#f6efe1;color:#4a3b2b;font-family:'EB Garamond',serif;font-size:18px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;opacity:.05;z-index:60;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");}
+a{color:#cf6038;text-decoration:none;}a:hover{color:#a8451f;}
+p,h1,h2,h3{text-wrap:pretty;margin:0;}
+button{font-family:'EB Garamond',serif;}
+</style>
+</helmet>
+<div>
+<header style="max-width:1180px;margin:0 auto;padding:36px 24px 0;box-sizing:border-box;text-align:center;">
+  <img src="assets/agapic-logo.jpg" alt="Agapic Chants" style="width:76px;height:76px;object-fit:cover;border-radius:50%;display:block;margin:0 auto 12px;">
+  <div style="font-size:15px;letter-spacing:.16em;text-transform:uppercase;color:#7d6a51;">Agapic Chants · Chantbook</div>
+  <div style="margin-top:10px;font-size:15px;"><a href="index.html">← All chants</a><span style="color:#7f6d55;"> · English · </span><a href="#" style="color:#7f6d55;text-decoration:underline;">Deutsch</a></div>
+</header>
+
+<section data-screen-label="There Is the Body" style="background:#efe4d0;margin-top:36px;padding:44px 24px 48px;">
+<main style="max-width:820px;margin:0 auto;width:100%;box-sizing:border-box;">
+  <h1 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(38px,4.4vw,58px);line-height:1.12;color:#2f2419;">There Is the Body</h1>
+  <p style="font-style:italic;color:#7f6d55;font-size:19px;margin-top:6px;">with Gabe</p>
+  <p style="font-size:15px;color:#6f5f4a;margin-top:10px;">Free to sing &amp; share · <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></p>
+
+  <div style="margin-top:28px;background:#fbf6ec;border:1px solid #d5c1a0;border-radius:8px;padding:22px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+    <button onClick="{{ toggleAudio }}" style="width:58px;height:58px;border-radius:50%;background:#cf6038;color:#fbf6ec;border:none;font-size:20px;cursor:pointer;flex:0 0 auto;transition:background 180ms;" style-hover="background:#a8451f;">{{ audioGlyph }}</button>
+    <div style="flex:1 1 220px;">
+      <div style="font-size:19px;color:#2f2419;"><strong>There Is the Body</strong> <span style="font-style:italic;color:#7f6d55;">— with Gabe</span></div>
+      <button onClick="{{ toggleLyricsPeek }}" style="background:none;border:none;padding:0;font-size:16px;color:#cf6038;cursor:pointer;font-family:'EB Garamond',serif;">{{ lyricsPeekLabel }}</button>
+    </div>
+    <a href="{{ printHref }}" style="font-size:16px;flex:0 0 auto;">Print sheet →</a>
+    <sc-if value="{{ lyricsPeek }}" hint-placeholder-val="{{ false }}">
+      <div style="flex-basis:100%;border-top:1px solid #e4d7c0;padding-top:16px;margin-top:4px;">
+        <sc-for list="{{ peekStanzas }}" as="st" hint-placeholder-count="2">
+          <div style="margin-bottom:14px;">
+            <sc-for list="{{ st }}" as="ln" hint-placeholder-count="2">
+              <div style="font-family:'Cormorant Garamond',serif;font-size:21px;line-height:1.4;color:#2f2419;">{{ ln }}</div>
+            </sc-for>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+  </div>
+  <audio ref="{{ audioRef }}" src="audio/there-is-the-body.mp3" preload="none" onEnded="{{ audioEnded }}" onError="{{ audioError }}"></audio>
+</main>
+</section>
+
+<section style="padding:36px 24px 0;">
+  <div style="max-width:760px;margin:0 auto;display:flex;gap:16px;align-items:center;">
+    <img src="assets/agapic-logo.jpg" alt="" style="flex:0 0 auto;width:44px;height:44px;object-fit:cover;border-radius:50%;" />
+    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;line-height:1.5;color:#5c4b38;">While you sing — tune into the sensations in your body, and try looking out of the lower-third of your eyes. Sink into the experience of your own body. Feel the direct connection with the larger body of matter and energy in which your body participates.</p>
+  </div>
+</section>
+
+<main style="max-width:820px;margin:0 auto;width:100%;padding:48px 24px 0;box-sizing:border-box;">
+  <div style="font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:#7d6a51;">Pick your instrument</div>
+  <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:18px;">
+    <sc-for list="{{ instruments }}" as="i" hint-placeholder-count="4">
+      <button onClick="{{ i.pick }}" style="{{ i.style }}">
+        <span style="display:block;font-size:30px;line-height:1.2;">{{ i.icon }}</span>
+        <span style="display:block;font-size:15px;color:#5c4b38;margin-top:2px;">{{ i.label }}</span>
+      </button>
+    </sc-for>
+  </div>
+
+  <sc-if value="{{ showTools }}" hint-placeholder-val="{{ false }}">
+    <div style="margin-top:22px;">
+      <p style="font-style:italic;color:#6f5f4a;">Whatever you know, there's a way to play this.</p>
+
+      <sc-if value="{{ showCards }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:22px;">
+          <sc-for list="{{ playCards }}" as="c" hint-placeholder-count="2">
+            <button onClick="{{ c.pick }}" style="{{ c.style }}">
+              <span style="display:block;font-family:'Cormorant Garamond',serif;font-size:23px;color:#2f2419;">{{ c.title }}</span>
+              <span style="display:block;font-size:16px;color:#6f5f4a;margin-top:4px;">{{ c.body }}</span>
+            </button>
+          </sc-for>
+        </div>
+        <sc-if value="{{ playSubs }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px;">
+            <sc-for list="{{ playSubs }}" as="s" hint-placeholder-count="2">
+              <button onClick="{{ s.pick }}" style="{{ s.style }}">{{ s.label }}</button>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ playDetail }}" hint-placeholder-val="{{ false }}">
+          <p style="font-size:16px;color:#6f5f4a;margin-top:12px;max-width:560px;">{{ playDetail }}</p>
+        </sc-if>
+      </sc-if>
+      <sc-if value="{{ instrumentNote }}" hint-placeholder-val="{{ false }}">
+        <p style="margin-top:18px;color:#5c4b38;border-top:1px solid #e4d7c0;padding-top:14px;">{{ instrumentNote }}</p>
+      </sc-if>
+
+      <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-end;margin-top:26px;">
+        <div>
+          <div style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#96754c;margin-bottom:6px;">Key</div>
+          <div style="display:flex;align-items:stretch;">
+            <button onClick="{{ keyDown }}" style="width:42px;border:1px solid #c9b48f;border-right:none;border-radius:8px 0 0 8px;background:transparent;color:#4a3b2b;font-size:20px;cursor:pointer;">−</button>
+            <div style="min-width:52px;border:1px solid #c9b48f;background:#fbf6ec;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:24px;color:#2f2419;padding:4px 10px;box-sizing:border-box;">{{ keyName }}</div>
+            <button onClick="{{ keyUp }}" style="width:42px;border:1px solid #c9b48f;border-left:none;border-radius:0 8px 8px 0;background:transparent;color:#4a3b2b;font-size:20px;cursor:pointer;">+</button>
+          </div>
+        </div>
+        <sc-if value="{{ showMiniTool }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ toggleMinis }}" style="{{ miniBtnStyle }}">Chord boxes everywhere</button>
+        </sc-if>
+        <sc-if value="{{ keyNote }}" hint-placeholder-val="{{ false }}">
+          <span style="font-size:16px;font-style:italic;color:#6f5f4a;padding-bottom:10px;">{{ keyNote }}</span>
+        </sc-if>
+      </div>
+
+      <sc-if value="{{ showBoxes }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;gap:22px;flex-wrap:wrap;margin-top:24px;">
+          <sc-for list="{{ boxes }}" as="b" hint-placeholder-count="5">
+            <div style="text-align:center;">
+              <div>{{ b.el }}</div>
+              <div style="font-size:16px;color:#4a3b2b;margin-top:2px;">{{ b.name }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <div style="margin-top:52px;">
+    <div>
+      <sc-for list="{{ lyricStanzas }}" as="st" hint-placeholder-count="2">
+        <div style="margin-bottom:30px;">
+          <sc-for list="{{ st }}" as="ln" hint-placeholder-count="2">
+            <div style="margin-bottom:6px;font-size:0;">
+              <sc-for list="{{ ln }}" as="seg" hint-placeholder-count="2">
+                <span style="display:inline-block;vertical-align:bottom;">
+                  <span style="{{ chordStyle }}">{{ seg.ch }}{{ seg.box }}</span>
+                  <span style="display:block;font-family:'Cormorant Garamond',serif;font-size:27px;line-height:1.35;color:#2f2419;white-space:pre-wrap;">{{ seg.tx }}</span>
+                  <span style="display:block;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;line-height:1.25;color:#6f5f4a;white-space:pre-wrap;">{{ seg.sub }}</span>
+                </span>
+              </sc-for>
+            </div>
+          </sc-for>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="margin-top:20px;background:#fbf6ec;border:1px solid #e4d7c0;border-radius:8px;padding:14px 18px;max-width:520px;">
+    <p style="font-size:16px;color:#5c4b38;">The chants are free. <a href="donate.html">Your support helps make more of them ♡</a></p>
+  </div>
+
+</main>
+
+<section style="margin-top:56px;padding:0 24px 56px;">
+  <div style="max-width:820px;margin:0 auto;">
+    <div style="font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:#7d6a51;">Learn a harmony</div>
+    <details style="margin-top:8px;max-width:640px;">
+      <summary style="cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:8px;color:#cf6038;font-size:17px;"><span style="width:22px;height:22px;border:1px solid #cf6038;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:14px;flex:0 0 auto;">?</span>How does this work?</summary>
+      <div style="margin-top:12px;color:#5c4b38;border-left:2px solid #e4d7c0;padding-left:16px;">
+        <p>This player gives you the melody and two harmonies. You can mute any part, or drop it an octave with the 8va button.</p>
+        <p style="margin-top:10px;">Learning a harmony for the first time:</p>
+        <ol style="margin:8px 0 0;padding-left:22px;display:flex;flex-direction:column;gap:4px;">
+          <li>Mute the other parts and slow the tempo down.</li>
+          <li>Learn your harmony on its own, as if it were a new melody.</li>
+          <li>Speed back up, then unmute the other parts one at a time — keep singing your line while you listen to theirs.</li>
+        </ol>
+        <p style="margin-top:10px;font-style:italic;">If you get pulled off your line, that's normal — mute again, find it, and try once more.</p>
+      </div>
+    </details>
+    <div style="margin-top:20px;background:#fbf6ec;border:1px solid #d5c1a0;border-radius:8px;padding:20px;">
+      <canvas ref="{{ ppCanvas }}" onPointerDown="{{ ppDown }}" onPointerMove="{{ ppMove }}" onPointerUp="{{ ppUp }}" onPointerCancel="{{ ppUp }}" style="width:100%;height:200px;display:block;cursor:grab;border-radius:8px;touch-action:pan-y;"></canvas>
+      <div style="font-size:14px;color:#7f6d55;margin-top:6px;">Drag the notes left or right to move where it plays from</div>
+      <div style="display:flex;gap:12px;align-items:center;margin-top:16px;flex-wrap:wrap;">
+        <button onClick="{{ ppToggle }}" style="width:48px;height:48px;border-radius:50%;background:#cf6038;color:#fbf6ec;border:none;font-size:17px;cursor:pointer;transition:background 180ms;" style-hover="background:#a8451f;">{{ ppGlyph }}</button>
+        <sc-for list="{{ ppVoices }}" as="v" hint-placeholder-count="3">
+          <span style="display:flex;align-items:stretch;">
+            <button onClick="{{ v.pick }}" style="{{ v.style }}">{{ v.label }}</button>
+            <button onClick="{{ v.oct }}" title="Too high? Sing it an octave down" style="{{ v.octStyle }}">{{ v.octLabel }}</button>
+          </span>
+        </sc-for>
+        <span style="display:flex;align-items:stretch;margin-left:12px;" title="Key — linked to the key selector above">
+          <button onClick="{{ keyDown }}" style="width:34px;border:1px solid #c9b48f;border-right:none;border-radius:8px 0 0 8px;background:transparent;color:#4a3b2b;font-size:17px;cursor:pointer;">−</button>
+          <span style="min-width:44px;border:1px solid #c9b48f;background:#f6efe1;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:19px;color:#2f2419;padding:2px 8px;box-sizing:border-box;">{{ keyName }}</span>
+          <button onClick="{{ keyUp }}" style="width:34px;border:1px solid #c9b48f;border-left:none;border-radius:0 8px 8px 0;background:transparent;color:#4a3b2b;font-size:17px;cursor:pointer;">+</button>
+        </span>
+        <sc-if value="{{ ppAlong }}" hint-placeholder-val="{{ false }}">
+          <span style="font-size:15px;font-style:italic;color:#6f5f4a;">playing in B♭ — the recording's key, so you can play along</span>
+        </sc-if>
+        <label style="margin-left:auto;display:flex;align-items:center;gap:10px;font-size:16px;color:#5c4b38;">Speed
+          <input type="range" min="50" max="150" value="{{ speedVal }}" onChange="{{ setSpeed }}" style="accent-color:#cf6038;width:150px;">
+          <span>{{ speedVal }}%</span>
+        </label>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer style="background:#efe4d0;border-top:1px solid #d5c1a0;padding:56px 24px 64px;">
+  <div style="max-width:820px;margin:0 auto;text-align:center;">
+    <p style="font-size:17px;color:#5c4b38;font-style:italic;">This chant was made with Gabe, in a room. If you'd like one of your own — <a href="https://agapicchants.com" target="_blank" rel="noopener" style="font-style:normal;">Make a chant →</a></p>
+    <p style="margin-top:14px;font-size:16px;color:#6f5f4a;"><a href="index.html">← All chants</a> · Free to sing &amp; share</p>
+    <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener" style="display:inline-block;margin-top:12px;"><img src="assets/cc-by-nc.svg" alt="CC BY-NC 4.0" style="height:28px;display:block;opacity:.85;"></a>
+  </div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;chordsAlways&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;defaultInstrument&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;mic&quot;,&quot;guitar&quot;,&quot;piano&quot;,&quot;ukulele&quot;],&quot;default&quot;:&quot;mic&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
+class Component extends DCLogic {
+  state = {
+    instrument: null, key: 10, playOpt: null, keyNote: '',
+    showMinis: false,
+    audioPlaying: false, lyricsPeek: false,
+    ppPlaying: false, mutes: { S: false, A: false, T: true }, octDown: { S: false, A: false, T: false }, speed: 100, ppSylState: null
+  };
+  constructor(props) {
+    super(props);
+    this.audioRef = React.createRef();
+    this.ppCanvas = React.createRef();
+    this.ppOffset = 0; this.ppStart = 0; this.lastBeat = -0.01;
+  }
+  get C() {
+    if (this._C) return this._C;
+    const NOTES = ['C','D♭','D','E♭','E','F','F♯','G','A♭','A','B♭','B'];
+    const DEG = { I: [0, ''], ii: [2, 'm'], IV: [5, ''], V: [7, ''], bVII: [10, ''] };
+    const GUITAR = {
+      '0': [-1,3,2,0,1,0], '0m': [-1,3,5,5,4,3], '1': [-1,4,6,6,6,4], '1m': [-1,4,6,6,5,4],
+      '2': [-1,-1,0,2,3,2], '2m': [-1,-1,0,2,3,1], '3': [-1,6,8,8,8,6], '3m': [-1,6,8,8,7,6],
+      '4': [0,2,2,1,0,0], '4m': [0,2,2,0,0,0], '5': [1,3,3,2,1,1], '5m': [1,3,3,1,1,1],
+      '6': [2,4,4,3,2,2], '6m': [2,4,4,2,2,2], '7': [3,2,0,0,0,3], '7m': [3,5,5,3,3,3],
+      '8': [4,6,6,5,4,4], '8m': [4,6,6,4,4,4], '9': [-1,0,2,2,2,0], '9m': [-1,0,2,2,1,0],
+      '10': [-1,1,3,3,3,1], '10m': [-1,1,3,3,2,1], '11': [-1,2,4,4,4,2], '11m': [-1,2,4,4,3,2]
+    };
+    const UKE = {
+      '0': [0,0,0,3], '0m': [0,3,3,3], '1': [1,1,1,4], '1m': [1,4,4,4], '2': [2,2,2,0], '2m': [2,2,1,0],
+      '3': [0,3,3,1], '3m': [3,3,2,1], '4': [4,4,4,2], '4m': [0,4,3,2], '5': [2,0,1,0], '5m': [1,0,1,3],
+      '6': [3,1,2,1], '6m': [2,1,2,0], '7': [0,2,3,2], '7m': [0,2,3,1], '8': [5,3,4,3], '8m': [1,3,4,2],
+      '9': [2,1,0,0], '9m': [2,0,0,0], '10': [3,2,1,1], '10m': [3,1,1,1], '11': [4,3,2,2], '11m': [4,2,2,2]
+    };
+    const LYRICS = [
+      [[['','There is the '],['IV','body '],['I','and the '],['V','opening']],
+       [['IV','Remember, ','(surrender) '],['I','\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0rem','\u00a0'],['V','ember ×2','(surrender)']]],
+      [[['ii','The oceanic '],['I','feeling, '],['ii','the amniotic '],['I','deep']],
+       [['bVII','Always here and now, '],['IV','where else would it '],['V','be?']]]
+    ];
+    const PARTS = {
+      S: { color: '#cf6038', name: 'Melody', ev: [] },
+      A: { color: '#7d8b6a', name: 'Harmony 1', ev: [] },
+      T: { color: '#b08c3f', name: 'Harmony 2', ev: [] }
+    };
+    this._C = { NOTES, DEG, GUITAR, UKE, LYRICS, PARTS, BPM: 70, TOTAL: 88 };
+    return this._C;
+  }
+  chordName(sym) { const { NOTES, DEG } = this.C; const [o,q] = DEG[sym]; return NOTES[(this.state.key + o) % 12] + q; }
+  chordKey(sym) { const [o,q] = this.C.DEG[sym]; return String((this.state.key + o) % 12) + q; }
+  fretEl(frets, mini) {
+    const h = React.createElement, n = frets.length, s = mini ? 0.58 : 1;
+    const pos = frets.filter(f => f > 0), mx = pos.length ? Math.max(...pos) : 0;
+    const base = mx > 4 ? Math.min(...pos) : 1;
+    const sx = i => (18 + i * (54 / (n - 1))) * s, top = 26 * s, rowH = 17 * s;
+    const kids = [];
+    for (let i = 0; i < n; i++) kids.push(h('line', { key: 's'+i, x1: sx(i), y1: top, x2: sx(i), y2: top + 4*rowH, stroke: '#5c4b38', strokeWidth: 1 }));
+    for (let r = 0; r <= 4; r++) kids.push(h('line', { key: 'f'+r, x1: sx(0), y1: top + r*rowH, x2: sx(n-1), y2: top + r*rowH, stroke: '#5c4b38', strokeWidth: r === 0 && base === 1 ? 4 * s : 1 }));
+    if (base > 1) kids.push(h('text', { key: 'b', x: 2 * s, y: top + 13 * s, fontSize: Math.max(8, 11 * s), fill: '#6f5f4a', fontFamily: 'EB Garamond, serif' }, base + 'fr'));
+    frets.forEach((f, i) => {
+      if (f === -1) kids.push(h('text', { key: 'x'+i, x: sx(i), y: 18 * s, fontSize: Math.max(8, 12 * s), fill: '#6f5f4a', textAnchor: 'middle' }, '×'));
+      else if (f === 0) kids.push(h('circle', { key: 'o'+i, cx: sx(i), cy: 14 * s, r: 3.4 * s + (mini ? 0.6 : 0), fill: 'none', stroke: '#6f5f4a', strokeWidth: 1.2 }));
+      else kids.push(h('circle', { key: 'd'+i, cx: sx(i), cy: top + (f - base + 0.5) * rowH, r: 5.4 * s + (mini ? 0.6 : 0), fill: '#2f2419' }));
+    });
+    return h('svg', { width: 90 * s, height: 102 * s, viewBox: '0 0 ' + (90 * s) + ' ' + (102 * s) }, kids);
+  }
+  ukeIcon() {
+    const h = React.createElement;
+    return h('svg', { width: 30, height: 30, viewBox: '0 0 30 30' },
+      h('line', { x1: 14, y1: 16, x2: 25, y2: 5, stroke: '#8a4d26', strokeWidth: 4.5, strokeLinecap: 'round' }),
+      h('rect', { x: 22.5, y: 1.5, width: 6, height: 6, rx: 1.5, fill: '#6f3d1e', transform: 'rotate(45 25.5 4.5)' }),
+      h('circle', { cx: 10.5, cy: 19.5, r: 8.5, fill: '#b06a3b' }),
+      h('circle', { cx: 12.5, cy: 17.5, r: 2.6, fill: '#f6efe1' }),
+      h('line', { x1: 6, y1: 24, x2: 16, y2: 14, stroke: '#f0d9b8', strokeWidth: 1 }));
+  }
+  pianoEl(sym) {
+    const h = React.createElement, [o,q] = this.C.DEG[sym];
+    const root = (this.state.key + o) % 12;
+    const tones = new Set([root, (root + (q ? 3 : 4)) % 12, (root + 7) % 12]);
+    const W = [0,2,4,5,7,9,11], kids = [];
+    for (let i = 0; i < 14; i++) {
+      const pc = W[i % 7];
+      kids.push(h('rect', { key: 'w'+i, x: i*13, y: 0, width: 13, height: 58, fill: tones.has(pc) ? '#cf6038' : '#fbf6ec', stroke: '#5c4b38', strokeWidth: 0.8 }));
+    }
+    for (let i = 0; i < 14; i++) {
+      const pc = W[i % 7]; if (![0,2,5,7,9].includes(pc)) continue;
+      const bpc = (pc + 1) % 12;
+      kids.push(h('rect', { key: 'b'+i, x: i*13 + 8.5, y: 0, width: 9, height: 34, fill: tones.has(bpc) ? '#cf6038' : '#2f2419' }));
+    }
+    return h('svg', { width: 182, height: 60, viewBox: '0 0 182 60' }, kids);
+  }
+  diagramEl(sym) {
+    const ins = this.state.instrument;
+    if (ins === 'piano') return this.pianoEl(sym);
+    const db = ins === 'ukulele' ? this.C.UKE : this.C.GUITAR;
+    const f = db[this.chordKey(sym)];
+    return f ? this.fretEl(f) : null;
+  }
+  ac() { if (!this._ac) this._ac = new (window.AudioContext || window.webkitAudioContext)(); if (this._ac.state === 'suspended') this._ac.resume(); return this._ac; }
+  tone(midi, t0, dur, vol) {
+    const ac = this.ac(), f = 440 * Math.pow(2, (midi - 69) / 12);
+    const g = ac.createGain(); g.connect(ac.destination);
+    g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(vol, t0 + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.001, t0 + dur);
+    [[1,1],[2,0.25],[3,0.09]].forEach(([mul, amp]) => {
+      const o = ac.createOscillator(); o.type = 'sine'; o.frequency.value = f * mul;
+      const og = ac.createGain(); og.gain.value = amp; o.connect(og); og.connect(g);
+      o.start(t0); o.stop(t0 + dur + 0.05);
+    });
+  }
+  componentDidMount() {
+    const loop = () => { this.raf = requestAnimationFrame(loop); this.ppFrame(); };
+    this.raf = requestAnimationFrame(loop);
+    fetch('assets/there-is-the-body-parts.json').then(r => r.json()).then(d => {
+      const map = { S: 'P1', A: 'P2', T: 'P3' };
+      let total = 0;
+      Object.entries(map).forEach(([k, pid]) => {
+        let last = '';
+        this.C.PARTS[k].ev = (d[pid] || []).map(e => { const held = !e.s; last = e.s || last; total = Math.max(total, e.t + e.d); return { t: e.t, d: e.d, m: e.m, syl: e.s || last, sylHold: held }; });
+      });
+      if (d.__total) this.C.TOTAL = d.__total; else if (total) this.C.TOTAL = Math.ceil(total);
+      const all = Object.values(this.C.PARTS).flatMap(p => p.ev.map(e => e.m));
+      if (all.length) { this.midiLo = Math.min(...all) - 1; this.midiHi = Math.max(...all) + 1; }
+      this.forceUpdate();
+    }).catch(() => {});
+  }
+  componentWillUnmount() { cancelAnimationFrame(this.raf); }
+  ppBeat() {
+    if (!this.state.ppPlaying) return this.ppOffset;
+    const el = (performance.now() - this.ppStart) / 1000;
+    return this.ppOffset + el * (this.C.BPM / 60) * (this.state.speed / 100);
+  }
+  ppFrame() {
+    const cv = this.ppCanvas.current; if (!cv) return;
+    let beat = this.ppBeat();
+    const { PARTS, TOTAL } = this.C;
+    if (this.state.ppPlaying) {
+      if (beat > TOTAL) { this.ppOffset = 0; this.ppStart = performance.now(); this.lastBeat = -0.01; beat = 0; }
+      const t0 = this.ac().currentTime;
+      const tr = ['capo1','capo3','real'].includes(this.state.playOpt) ? 0 : ((this.state.key - 10) % 12 + 18) % 12 - 6;
+      Object.entries(PARTS).forEach(([id, p]) => {
+        if (this.state.mutes[id]) return;
+        const oct = this.state.octDown[id] ? -12 : 0;
+        p.ev.forEach(e => { if (e.t > this.lastBeat && e.t <= beat) this.tone(e.m + tr + oct, t0, e.d * (60 / this.C.BPM) / (this.state.speed / 100), id === 'T' ? 0.12 : 0.16); });
+      });
+      this.lastBeat = beat;
+    }
+    const dpr = window.devicePixelRatio || 1, w = cv.clientWidth, hgt = cv.clientHeight;
+    if (!w) return;
+    if (cv.width !== w * dpr) { cv.width = w * dpr; cv.height = hgt * dpr; }
+    const x2 = cv.getContext('2d'); x2.setTransform(dpr, 0, 0, dpr, 0, 0);
+    x2.fillStyle = '#f6efe1'; x2.fillRect(0, 0, w, hgt);
+    const ppb = 56, phX = w * 0.25;
+    const lo = this.midiLo ?? 46, hi = this.midiHi ?? 78;
+    const yOf = m => hgt - 32 - ((m - lo) / (hi - lo)) * (hgt - 56);
+    for (let b = 0; b <= TOTAL; b += 4) { const x = phX + (b - beat) * ppb; x2.strokeStyle = '#e4d7c0'; x2.beginPath(); x2.moveTo(x, 0); x2.lineTo(x, hgt); x2.stroke(); }
+    Object.entries(PARTS).forEach(([id, p]) => {
+      p.ev.forEach(e => {
+        const x = phX + (e.t - beat) * ppb, wd = e.d * ppb - 3;
+        if (x + wd < -20 || x > w + 20) return;
+        const active = beat >= e.t && beat < e.t + e.d;
+        x2.globalAlpha = this.state.mutes[id] ? 0.22 : (e.t + e.d < beat ? 0.4 : active ? 1 : 0.75);
+        x2.fillStyle = p.color;
+        x2.fillRect(x, yOf(e.m) - 4, wd, 8);
+      });
+    });
+    x2.globalAlpha = 1; x2.strokeStyle = '#2f2419'; x2.lineWidth = 1.4;
+    x2.beginPath(); x2.moveTo(phX, 0); x2.lineTo(phX, hgt); x2.stroke();
+    // karaoke strip: melody syllables scroll along the bottom and light up as sung
+    x2.textAlign = 'left'; x2.textBaseline = 'alphabetic';
+    PARTS.S.ev.forEach(e => {
+      if (!e.syl || e.sylHold) return;
+      const x = phX + (e.t - beat) * ppb;
+      if (x < -80 || x > w + 80) return;
+      const active = beat >= e.t && beat < e.t + e.d;
+      x2.font = (active ? '600 20px' : '15px') + " 'Cormorant Garamond', 'EB Garamond', serif";
+      x2.fillStyle = active ? '#cf6038' : '#8d7c63';
+      x2.fillText(e.syl, x, hgt - 8);
+    });
+  }
+  renderVals() {
+    const S = this.state, { NOTES, LYRICS, PARTS } = this.C;
+    const ins = S.instrument ?? this.props.defaultInstrument ?? 'mic';
+    const btn3d = on => ({ background: '#fbf6ec', border: '1px solid #d5c1a0', borderRadius: '10px', padding: '10px 22px 8px', cursor: 'pointer', textAlign: 'center', transition: 'all 120ms', boxShadow: on ? 'inset 0 3px 7px rgba(47,36,25,.3)' : '0 4px 0 #c9b48f, 0 6px 10px rgba(47,36,25,.12)', transform: on ? 'translateY(4px)' : 'none', fontFamily: "'EB Garamond', serif" });
+    const btn = on => ({ background: on ? '#cf6038' : 'transparent', color: on ? '#fbf6ec' : '#4a3b2b', border: '1px solid ' + (on ? '#cf6038' : '#c9b48f'), borderRadius: '8px', padding: '9px 20px', fontSize: '17px', cursor: 'pointer', transition: 'background 180ms', fontFamily: "'EB Garamond', serif" });
+    const chordsOn = (this.props.chordsAlways ?? false) || ins !== 'mic';
+    const setKey = (k, note) => this.setState({ key: k, keyNote: note || '' });
+    const recOn = ['rec','capo1','capo3','real'].includes(S.playOpt);
+    const optBtn = on => ({ ...btn3d(on), flex: '1 1 240px', maxWidth: '340px', textAlign: 'left', padding: '16px 20px 14px' });
+    let playCards = [], playSubs = null, playDetail = '';
+    if (ins === 'guitar' || ins === 'ukulele') {
+      playCards = [
+        { title: 'I\u2019m a total beginner', body: 'One press sets everything up: easy open shapes, no capo, no tuning.', style: optBtn(S.playOpt === 'beginner'), pick: () => { this.setState({ playOpt: 'beginner', showMinis: true }); setKey(7, ''); } },
+        { title: 'Play along with the recording', body: 'Match the exact pitch of the recording (B♭).', style: optBtn(recOn), pick: () => { if (ins === 'guitar') { this.setState({ playOpt: 'capo3' }); setKey(7, 'G shapes, capo on fret 3'); } else { this.setState({ playOpt: 'real' }); setKey(10, ''); } } }
+      ];
+      if (S.playOpt === 'beginner') playDetail = 'You\u2019re set — playing in G with G · C · D · Am · F. The shapes are below.';
+      if (recOn && ins === 'guitar') {
+        const sub = (label, id, key, note) => ({ label, style: btn(S.playOpt === id), pick: () => { this.setState({ playOpt: id }); setKey(key, note); } });
+        playSubs = [sub('Capo on fret 3', 'capo3', 7, ''), sub('Capo on fret 1', 'capo1', 9, '')];
+        playDetail = S.playOpt === 'capo1' ? 'Put a capo on fret 1 and play the A shapes — A · D · E · Bm · G.' : 'Put a capo on fret 3 and play the G shapes — G · C · D · Am · F. The boxes below show the shapes.';
+      }
+      if (recOn && ins === 'ukulele') playDetail = 'Playing in B\u266d as recorded — the boxes below show the shapes.';
+    }
+    const instrumentNote = ins === 'piano' ? 'Every key works on a keyboard. The recording is in B♭ — or nudge the key to suit your voice. The chord boxes light up the notes.' : '';
+    const minisOn = S.showMinis && (ins === 'guitar' || ins === 'ukulele');
+    const miniBox = sym => { const f = (ins === 'ukulele' ? this.C.UKE : this.C.GUITAR)[this.chordKey(sym)]; return f ? this.fretEl(f, true) : null; };
+    const ids = ['S','A','T'];
+    return {
+      audioRef: this.audioRef,
+      audioGlyph: S.audioPlaying ? '❙❙' : '▶',
+      toggleAudio: () => { const a = this.audioRef.current; if (!a) return; if (S.audioPlaying) { a.pause(); this.setState({ audioPlaying: false }); } else { a.play().then(() => this.setState({ audioPlaying: true })).catch(() => this.setState({ audioPlaying: false })); } },
+      audioEnded: () => this.setState({ audioPlaying: false }),
+      audioError: () => this.setState({ audioPlaying: false }),
+      printHref: 'there-is-the-body-print.html?key=' + S.key + (minisOn ? '&boxes=1' : ''),
+      lyricsPeek: S.lyricsPeek,
+      lyricsPeekLabel: S.lyricsPeek ? 'Hide the words ↑' : 'The words ↓',
+      toggleLyricsPeek: () => this.setState({ lyricsPeek: !S.lyricsPeek }),
+      peekStanzas: LYRICS.map(stz => stz.map(line => line.map(seg => seg[1]).join(''))),
+      showTools: ins !== 'mic',
+      instruments: [['mic','🎤','Sing'],['guitar','🎸','Guitar'],['ukulele',null,'Ukulele'],['piano','🎹','Piano']].map(([id, icon, label]) => ({ icon: icon ?? this.ukeIcon(), label, style: btn3d(ins === id), pick: () => this.setState({ instrument: id, playOpt: null, keyNote: '', showMinis: false, key: 10 }) })),
+      showCards: ins === 'guitar' || ins === 'ukulele',
+      playCards, playSubs, playDetail, instrumentNote,
+      showMiniTool: ins === 'guitar' || ins === 'ukulele',
+      toggleMinis: () => this.setState({ showMinis: !S.showMinis }),
+      miniBtnStyle: btn(S.showMinis),
+      keyNote: S.keyNote,
+      keyName: NOTES[S.key],
+      keyDown: () => setKey((S.key + 11) % 12, ''),
+      keyUp: () => setKey((S.key + 1) % 12, ''),
+      showBoxes: ins !== 'mic',
+      boxes: ['IV','I','V','ii','bVII'].map(sym => ({ name: this.chordName(sym), el: this.diagramEl(sym) })),
+      chordStyle: chordsOn ? { display: 'flex', alignItems: 'center', gap: '6px', minHeight: minisOn ? '64px' : '30px', fontSize: '24px', fontWeight: 700, color: '#cf6038', letterSpacing: '.02em', fontFamily: "'EB Garamond', serif", lineHeight: 1 } : { display: 'none' },
+      lyricStanzas: LYRICS.map(stz => stz.map(line => line.map(([sym, tx, sub]) => ({ ch: chordsOn && sym ? this.chordName(sym) : '', box: minisOn && sym ? miniBox(sym) : null, tx, sub: sub || '' })))),
+      ppCanvas: this.ppCanvas,
+      ppGlyph: S.ppPlaying ? '❙❙' : '▶',
+      ppToggle: () => { if (S.ppPlaying) { this.ppOffset = this.ppBeat(); this.setState({ ppPlaying: false }); } else { this.ac(); this.ppStart = performance.now(); this.lastBeat = this.ppOffset - 0.01; this.setState({ ppPlaying: true }); } },
+      ppDown: e => { this.dragging = true; this.dragX = e.clientX; this.dragBeat = this.ppBeat(); e.target.setPointerCapture(e.pointerId); e.target.style.cursor = 'grabbing'; },
+      ppMove: e => { if (!this.dragging) return; const b = Math.max(0, Math.min(this.C.TOTAL, this.dragBeat - (e.clientX - this.dragX) / 56)); this.ppOffset = b; this.ppStart = performance.now(); this.lastBeat = b - 0.01; },
+      ppUp: e => { this.dragging = false; e.target.style.cursor = 'grab'; this.forceUpdate(); },
+      ppVoices: ids.map(id => ({
+        label: PARTS[id].name + (S.mutes[id] ? ' — off' : ''),
+        pick: () => this.setState({ mutes: { ...S.mutes, [id]: !S.mutes[id] } }),
+        style: { ...btn(!S.mutes[id]), background: S.mutes[id] ? 'transparent' : PARTS[id].color, border: S.mutes[id] ? '1px dashed #a89877' : '1px solid ' + PARTS[id].color, color: S.mutes[id] ? '#a89877' : '#fbf6ec', borderRadius: '8px 0 0 8px', borderRight: 'none' },
+        oct: () => this.setState({ octDown: { ...S.octDown, [id]: !S.octDown[id] } }),
+        octLabel: S.octDown[id] ? '8vb' : '8va',
+        octStyle: { border: '1px ' + (S.mutes[id] ? 'dashed #a89877' : 'solid ' + PARTS[id].color), borderRadius: '0 8px 8px 0', background: S.octDown[id] ? '#2f2419' : 'transparent', color: S.octDown[id] ? '#fbf6ec' : (S.mutes[id] ? '#7f6d55' : PARTS[id].color), fontSize: '13px', padding: '0 9px', cursor: 'pointer', fontFamily: "'EB Garamond', serif", letterSpacing: '.03em' }
+      })),
+      ppAlong: ['capo1','capo3','real'].includes(S.playOpt),
+      speedVal: S.speed,
+      setSpeed: e => { this.ppOffset = this.ppBeat(); this.ppStart = performance.now(); this.setState({ speed: Number(e.target.value) }); }
+    };
+  }
+}
+</script>
+</body>
+</html>
