@@ -22,7 +22,9 @@ button{font-family:'EB Garamond',serif;}
 <header style="max-width:1180px;margin:0 auto;padding:36px 24px 0;box-sizing:border-box;text-align:center;">
   <img src="assets/agapic-logo.jpg" alt="Agapic Chants" style="width:76px;height:76px;object-fit:cover;border-radius:50%;display:block;margin:0 auto 12px;">
   <div style="font-size:15px;letter-spacing:.16em;text-transform:uppercase;color:#7d6a51;">Agapic Chants · Chantbook</div>
-  <div style="margin-top:10px;font-size:15px;"><a href="index.html">← All chants</a><span style="color:#7f6d55;"> · English · </span><a href="#" style="color:#7f6d55;text-decoration:underline;">Deutsch</a></div>
+  <div style="margin-top:10px;font-size:15px;"><a href="index.html">← All chants</a><!-- language toggle, restore when the German translations land:
+      <span style="color:#7f6d55;"> · English · </span><a href="#" style="color:#7f6d55;text-decoration:underline;">Deutsch</a>
+      --></div>
 </header>
 
 <section data-screen-label="There Is the Body" style="background:#efe4d0;margin-top:36px;padding:44px 24px 48px;">
@@ -34,27 +36,20 @@ button{font-family:'EB Garamond',serif;}
   <div style="margin-top:28px;background:#fbf6ec;border:1px solid #d5c1a0;border-radius:8px;padding:22px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
     <div style="flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:7px;width:128px;">
       <img src="assets/art-there-is-the-body.jpg" alt="There Is the Body" style="width:128px;height:128px;object-fit:cover;border-radius:6px;box-shadow:0 3px 10px rgba(47,36,25,.2);" />
-      <span style="font-size:13px;color:#8d7c63;font-style:italic;text-align:center;">Art with <a href="https://www.instagram.com/roevardotter__/" target="_blank" rel="noopener"><a href="https://www.instagram.com/roevardotter__/" target="_blank" rel="noopener">Ronja Polzin</a></a></span>
+      <span style="font-size:13px;color:#8d7c63;font-style:italic;text-align:center;">Art with <a href="https://www.instagram.com/roevardotter__/" target="_blank" rel="noopener">Ronja Polzin</a></span>
     </div>
     <button onClick="{{ toggleAudio }}" style="width:58px;height:58px;border-radius:50%;background:#cf6038;color:#fbf6ec;border:none;font-size:20px;cursor:pointer;flex:0 0 auto;transition:background 180ms;" style-hover="background:#a8451f;">{{ audioGlyph }}</button>
     <div style="flex:1 1 220px;">
       <div style="font-size:19px;color:#2f2419;"><strong>There Is the Body</strong> <span style="font-style:italic;color:#7f6d55;">— with Gabe</span></div>
-      <button onClick="{{ toggleLyricsPeek }}" style="background:none;border:none;padding:0;font-size:16px;color:#cf6038;cursor:pointer;font-family:'EB Garamond',serif;">{{ lyricsPeekLabel }}</button>
+      <a href="#lyrics" style="font-size:16px;">Lyrics and chords below ↓</a>
+      <div style="{{ seekRowStyle }}">
+        <input type="range" min="0" max="{{ audioMax }}" step="0.1" value="{{ audioVal }}" onChange="{{ audioSeek }}" aria-label="Seek" style="flex:1 1 120px;accent-color:#cf6038;cursor:pointer;height:4px;" />
+        <span style="font-size:14px;color:#7f6d55;font-variant-numeric:tabular-nums;flex:0 0 auto;">{{ audioTime }}</span>
+      </div>
     </div>
     <a href="{{ printHref }}" style="font-size:16px;flex:0 0 auto;">Print sheet →</a>
-    <sc-if value="{{ lyricsPeek }}" hint-placeholder-val="{{ false }}">
-      <div style="flex-basis:100%;border-top:1px solid #e4d7c0;padding-top:16px;margin-top:4px;">
-        <sc-for list="{{ peekStanzas }}" as="st" hint-placeholder-count="2">
-          <div style="margin-bottom:14px;">
-            <sc-for list="{{ st }}" as="ln" hint-placeholder-count="2">
-              <div style="font-family:'Cormorant Garamond',serif;font-size:21px;line-height:1.4;color:#2f2419;">{{ ln }}</div>
-            </sc-for>
-          </div>
-        </sc-for>
-      </div>
-    </sc-if>
   </div>
-  <audio ref="{{ audioRef }}" src="audio/there-is-the-body.mp3" preload="none" onEnded="{{ audioEnded }}" onError="{{ audioError }}"></audio>
+  <audio ref="{{ audioRef }}" style="display:none;" src="audio/there-is-the-body.mp3" preload="metadata" onEnded="{{ audioEnded }}" onError="{{ audioError }}"></audio>
 </main>
 </section>
 
@@ -108,13 +103,23 @@ button{font-family:'EB Garamond',serif;}
         <div>
           <div style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#96754c;margin-bottom:6px;">Key</div>
           <div style="display:flex;align-items:stretch;">
-            <button onClick="{{ keyDown }}" style="width:42px;border:1px solid #c9b48f;border-right:none;border-radius:8px 0 0 8px;background:transparent;color:#4a3b2b;font-size:20px;cursor:pointer;">−</button>
+            <button onClick="{{ keyDown }}" style="width:42px;border:1px solid #c9b48f;border-right:none;border-radius:8px 0 0 8px;background:#fbf6ec;color:#4a3b2b;font-size:20px;cursor:pointer;box-shadow:0 2px 0 #d5c1a0, 0 3px 6px rgba(47,36,25,.12);">−</button>
             <div style="min-width:52px;border:1px solid #c9b48f;background:#fbf6ec;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:24px;color:#2f2419;padding:4px 10px;box-sizing:border-box;">{{ keyName }}</div>
-            <button onClick="{{ keyUp }}" style="width:42px;border:1px solid #c9b48f;border-left:none;border-radius:0 8px 8px 0;background:transparent;color:#4a3b2b;font-size:20px;cursor:pointer;">+</button>
+            <button onClick="{{ keyUp }}" style="width:42px;border:1px solid #c9b48f;border-left:none;border-radius:0 8px 8px 0;background:#fbf6ec;color:#4a3b2b;font-size:20px;cursor:pointer;box-shadow:0 2px 0 #d5c1a0, 0 3px 6px rgba(47,36,25,.12);">+</button>
           </div>
         </div>
         <sc-if value="{{ showMiniTool }}" hint-placeholder-val="{{ false }}">
           <button onClick="{{ toggleMinis }}" style="{{ miniBtnStyle }}">Chord boxes everywhere</button>
+        </sc-if>
+        <sc-if value="{{ showCapoTool }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;gap:10px;align-items:center;">
+            <button onClick="{{ toggleCapo }}" style="{{ capoBtnStyle }}">{{ capoLabel }}</button>
+            <div style="display:flex;align-items:stretch;opacity:{{ capoOpacity }};">
+              <button onClick="{{ capoDown }}" style="width:34px;border:1px solid #c9b48f;border-right:none;border-radius:8px 0 0 8px;background:#fbf6ec;color:#4a3b2b;font-size:18px;cursor:pointer;box-shadow:0 2px 0 #d5c1a0, 0 3px 6px rgba(47,36,25,.12);">−</button>
+              <input value="{{ capoFret }}" onChange="{{ capoInput }}" inputMode="numeric" style="width:44px;border:1px solid #c9b48f;background:#fbf6ec;text-align:center;font-family:'Cormorant Garamond',serif;font-size:22px;color:#2f2419;padding:4px 0;box-sizing:border-box;" />
+              <button onClick="{{ capoUp }}" style="width:34px;border:1px solid #c9b48f;border-left:none;border-radius:0 8px 8px 0;background:#fbf6ec;color:#4a3b2b;font-size:18px;cursor:pointer;box-shadow:0 2px 0 #d5c1a0, 0 3px 6px rgba(47,36,25,.12);">+</button>
+            </div>
+          </div>
         </sc-if>
         <sc-if value="{{ keyNote }}" hint-placeholder-val="{{ false }}">
           <span style="font-size:16px;font-style:italic;color:#6f5f4a;padding-bottom:10px;">{{ keyNote }}</span>
@@ -134,19 +139,28 @@ button{font-family:'EB Garamond',serif;}
     </div>
   </sc-if>
 
-  <div style="margin-top:52px;">
+  <div id="lyrics" style="margin-top:52px;">
     <div>
       <sc-for list="{{ lyricStanzas }}" as="st" hint-placeholder-count="2">
         <div style="margin-bottom:30px;">
           <sc-for list="{{ st }}" as="ln" hint-placeholder-count="2">
-            <div style="margin-bottom:6px;font-size:0;">
-              <sc-for list="{{ ln }}" as="seg" hint-placeholder-count="2">
+            <div style="margin-bottom:6px;">
+              <sc-if value="{{ ln.showStrip }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end;margin-bottom:6px;">
+                  <sc-for list="{{ ln.chords }}" as="c" hint-placeholder-count="2">
+                    <span style="display:flex;flex-direction:column;align-items:center;gap:3px;font-size:15px;font-weight:700;letter-spacing:.04em;color:#cf6038;font-family:'EB Garamond',serif;line-height:1;">{{ c.ch }}{{ c.box }}</span>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <div style="font-size:0;">
+              <sc-for list="{{ ln.segs }}" as="seg" hint-placeholder-count="2">
                 <span style="display:inline-block;vertical-align:bottom;">
                   <span style="{{ chordStyle }}">{{ seg.ch }}{{ seg.box }}</span>
                   <span style="display:block;font-family:'Cormorant Garamond',serif;font-size:27px;line-height:1.35;color:#2f2419;white-space:pre-wrap;">{{ seg.tx }}</span>
                   <span style="display:block;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;line-height:1.25;color:#6f5f4a;white-space:pre-wrap;">{{ seg.sub }}</span>
                 </span>
               </sc-for>
+              </div>
             </div>
           </sc-for>
         </div>
@@ -166,14 +180,18 @@ button{font-family:'EB Garamond',serif;}
     <details style="margin-top:8px;max-width:640px;">
       <summary style="cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:8px;color:#cf6038;font-size:17px;"><span style="width:22px;height:22px;border:1px solid #cf6038;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:14px;flex:0 0 auto;">?</span>How does this work?</summary>
       <div style="margin-top:12px;color:#5c4b38;border-left:2px solid #e4d7c0;padding-left:16px;">
-        <p>This player gives you the melody and two harmonies. You can mute any part, or drop it an octave with the 8va button.</p>
+        <p>This player gives you the melody and two harmonies. Tap a part to mute it, use 8va to drop it an octave if it sits too high for you, and drag the notes sideways to move where it plays from.</p>
         <p style="margin-top:10px;">Learning a harmony for the first time:</p>
-        <ol style="margin:8px 0 0;padding-left:22px;display:flex;flex-direction:column;gap:4px;">
-          <li>Mute the other parts and slow the tempo down.</li>
-          <li>Learn your harmony on its own, as if it were a new melody.</li>
-          <li>Speed back up, then unmute the other parts one at a time — keep singing your line while you listen to theirs.</li>
+        <ol style="margin:8px 0 0;padding-left:22px;display:flex;flex-direction:column;gap:6px;">
+          <li>Mute everything except your own line, and pull the Speed slider down to around 70%.</li>
+          <li>Press <em>Loop a part</em> — it repeats one part over and over, so you can stay with a small piece until it sits in your body. The ‹ › arrows move to the next part.</li>
+          <li>Sing along with the loop. Let it go around several times before you judge how it's going.</li>
+          <li>Bring the speed back to 100%, still looping.</li>
+          <li>Unmute the melody and keep singing your line against it. Then unmute the other harmony.</li>
+          <li>Turn the loop off and sing the whole chant through.</li>
         </ol>
-        <p style="margin-top:10px;font-style:italic;">If you get pulled off your line, that's normal — mute again, find it, and try once more.</p>
+        <p style="margin-top:10px;font-style:italic;">If you get pulled onto someone else's line, that's normal — mute them again, find your note, and go round the loop once more.</p>
+        <p style="margin-top:10px;">The key here follows the key selector above, so you can practise in whatever key suits your voice. Setting it back to the recording's key lets you sing along with the recording at the top of the page.</p>
       </div>
     </details>
     <div style="margin-top:20px;background:#fbf6ec;border:1px solid #d5c1a0;border-radius:8px;padding:20px;">
@@ -195,6 +213,16 @@ button{font-family:'EB Garamond',serif;}
         <sc-if value="{{ ppAlong }}" hint-placeholder-val="{{ false }}">
           <span style="font-size:15px;font-style:italic;color:#6f5f4a;">playing in B♭ — the recording's key, so you can play along</span>
         </sc-if>
+        <span style="display:flex;align-items:stretch;gap:8px;" title="Loop one phrase at a time">
+          <button onClick="{{ loopToggle }}" style="{{ loopBtnStyle }}">{{ loopLabel }}</button>
+          <sc-if value="{{ loopOn }}" hint-placeholder-val="{{ false }}">
+            <span style="display:flex;align-items:stretch;">
+              <button onClick="{{ loopPrev }}" style="width:32px;border:1px solid #c9b48f;border-right:none;border-radius:8px 0 0 8px;background:#fbf6ec;color:#4a3b2b;font-size:16px;cursor:pointer;box-shadow:0 2px 0 #d5c1a0, 0 3px 6px rgba(47,36,25,.12);">‹</button>
+              <span style="min-width:74px;border:1px solid #c9b48f;background:#f6efe1;display:flex;align-items:center;justify-content:center;font-size:15px;color:#2f2419;padding:2px 8px;box-sizing:border-box;">{{ loopWhich }}</span>
+              <button onClick="{{ loopNext }}" style="width:32px;border:1px solid #c9b48f;border-left:none;border-radius:0 8px 8px 0;background:#fbf6ec;color:#4a3b2b;font-size:16px;cursor:pointer;box-shadow:0 2px 0 #d5c1a0, 0 3px 6px rgba(47,36,25,.12);">›</button>
+            </span>
+          </sc-if>
+        </span>
         <label style="margin-left:auto;display:flex;align-items:center;gap:10px;font-size:16px;color:#5c4b38;">Speed
           <input type="range" min="50" max="150" value="{{ speedVal }}" onChange="{{ setSpeed }}" style="accent-color:#cf6038;width:150px;">
           <span>{{ speedVal }}%</span>
@@ -246,9 +274,10 @@ button{font-family:'EB Garamond',serif;}
 class Component extends DCLogic {
   state = {
     instrument: null, key: 10, playOpt: null, keyNote: '',
+    capoOn: false, capo: 0,
     showMinis: false,
-    audioPlaying: false, lyricsPeek: false,
-    ppPlaying: false, mutes: { S: false, A: false, T: true }, octDown: { S: false, A: false, T: false }, speed: 100, ppSylState: null
+    audioPlaying: false, audioPos: 0, audioDur: 0, narrow: false,
+    ppPlaying: false, loopIdx: null, mutes: { S: false, A: false, T: true }, octDown: { S: false, A: false, T: false }, speed: 100, ppSylState: null
   };
   constructor(props) {
     super(props);
@@ -288,8 +317,9 @@ class Component extends DCLogic {
     this._C = { NOTES, DEG, GUITAR, UKE, LYRICS, PARTS, BPM: 70, TOTAL: 88 };
     return this._C;
   }
-  chordName(sym) { const { NOTES, DEG } = this.C; const [o,q] = DEG[sym]; return NOTES[(this.state.key + o) % 12] + q; }
-  chordKey(sym) { const [o,q] = this.C.DEG[sym]; return String((this.state.key + o) % 12) + q; }
+  capoShift() { return (this.state.capoOn && this.state.instrument === 'guitar') ? (this.state.capo || 0) : 0; }
+  chordName(sym) { const { NOTES, DEG } = this.C; const [o,q] = DEG[sym]; return NOTES[((this.state.key + o - this.capoShift()) % 12 + 12) % 12] + q; }
+  chordKey(sym) { const [o,q] = this.C.DEG[sym]; return String(((this.state.key + o - this.capoShift()) % 12 + 12) % 12) + q; }
   fretEl(frets, mini) {
     const h = React.createElement, n = frets.length, s = mini ? 0.58 : 1;
     const pos = frets.filter(f => f > 0), mx = pos.length ? Math.max(...pos) : 0;
@@ -315,7 +345,7 @@ class Component extends DCLogic {
       h('circle', { cx: 12.5, cy: 17.5, r: 2.6, fill: '#f6efe1' }),
       h('line', { x1: 6, y1: 24, x2: 16, y2: 14, stroke: '#f0d9b8', strokeWidth: 1 }));
   }
-  pianoEl(sym) {
+  pianoEl(sym, mini) {
     const h = React.createElement, [o,q] = this.C.DEG[sym];
     const root = (this.state.key + o) % 12;
     const tones = new Set([root, (root + (q ? 3 : 4)) % 12, (root + 7) % 12]);
@@ -329,7 +359,8 @@ class Component extends DCLogic {
       const bpc = (pc + 1) % 12;
       kids.push(h('rect', { key: 'b'+i, x: i*13 + 8.5, y: 0, width: 9, height: 34, fill: tones.has(bpc) ? '#cf6038' : '#2f2419' }));
     }
-    return h('svg', { width: 182, height: 60, viewBox: '0 0 182 60' }, kids);
+    const psc = mini ? 0.7 : 1;
+    return h('svg', { width: 182 * psc, height: 60 * psc, viewBox: '0 0 182 60' }, kids);
   }
   diagramEl(sym) {
     const ins = this.state.instrument;
@@ -338,6 +369,7 @@ class Component extends DCLogic {
     const f = db[this.chordKey(sym)];
     return f ? this.fretEl(f) : null;
   }
+  acResume() { const c = this.ac(); if (c && c.state === 'suspended' && c.resume) c.resume(); return c; }
   ac() { if (!this._ac) this._ac = new (window.AudioContext || window.webkitAudioContext)(); if (this._ac.state === 'suspended') this._ac.resume(); return this._ac; }
   tone(midi, t0, dur, vol) {
     const ac = this.ac(), f = 440 * Math.pow(2, (midi - 69) / 12);
@@ -350,7 +382,7 @@ class Component extends DCLogic {
       o.start(t0); o.stop(t0 + dur + 0.05);
     });
   }
-  componentDidMount() {
+  _didMountExtra() {
     const loop = () => { this.raf = requestAnimationFrame(loop); this.ppFrame(); };
     this.raf = requestAnimationFrame(loop);
     fetch('assets/there-is-the-body-parts.json').then(r => r.json()).then(d => {
@@ -360,6 +392,7 @@ class Component extends DCLogic {
         let last = '';
         this.C.PARTS[k].ev = (d[pid] || []).map(e => { const held = !e.s; last = e.s || last; total = Math.max(total, e.t + e.d); return { t: e.t, d: e.d, m: e.m, syl: e.s || last, sylHold: held }; });
       });
+      this._phrases = null;
       if (d.__total) this.C.TOTAL = d.__total; else if (total) this.C.TOTAL = Math.ceil(total);
       const all = Object.values(this.C.PARTS).flatMap(p => p.ev.map(e => e.m));
       if (all.length) { this.midiLo = Math.min(...all) - 1; this.midiHi = Math.max(...all) + 1; }
@@ -367,6 +400,37 @@ class Component extends DCLogic {
     }).catch(() => {});
   }
   componentWillUnmount() { cancelAnimationFrame(this.raf); }
+  phrases() {
+    const ev = Object.values(this.C.PARTS).flatMap(p => p.ev).slice().sort((a, b) => a.t - b.t);
+    if (this._phrases && this._phrasesN === ev.length) return this._phrases;
+    this._phrasesN = ev.length;
+    if (!ev.length) return (this._phrases = []);
+    // every rest of two beats or more is a candidate phrase break
+    const gaps = [];
+    let end = ev[0].t + ev[0].d;
+    ev.forEach(e => { if (e.t - end >= 2) gaps.push({ at: e.t, after: end }); end = Math.max(end, e.t + e.d); });
+    const first = ev[0].t, last = end;
+    // aim for one phrase per stanza, choosing the rest nearest each stanza boundary
+    const want = Math.max(1, (this.C.LYRICS || []).length);
+    const cuts = [];
+    for (let k = 1; k < want && gaps.length; k++) {
+      const target = first + (last - first) * k / want;
+      let best = null;
+      gaps.forEach(g => {
+        if (cuts.some(c => c.at === g.at)) return;
+        const dist = Math.abs(g.at - target);
+        if (!best || dist < best.dist) best = { g, dist };
+      });
+      if (best) cuts.push(best.g);
+    }
+    cuts.sort((a, b) => a.at - b.at);
+    const out = [];
+    let a = first;
+    cuts.forEach(c => { out.push({ a, b: c.after }); a = c.at; });
+    out.push({ a, b: last });
+    this._phrases = out;
+    return out;
+  }
   ppBeat() {
     if (!this.state.ppPlaying) return this.ppOffset;
     const el = (performance.now() - this.ppStart) / 1000;
@@ -377,7 +441,9 @@ class Component extends DCLogic {
     let beat = this.ppBeat();
     const { PARTS, TOTAL } = this.C;
     if (this.state.ppPlaying) {
-      if (beat > TOTAL) { this.ppOffset = 0; this.ppStart = performance.now(); this.lastBeat = -0.01; beat = 0; }
+      const ph = this.state.loopIdx !== null ? this.phrases()[this.state.loopIdx] : null;
+      const end = ph ? ph.b + 1 : TOTAL, start = ph ? Math.max(0, ph.a - 0.5) : 0;
+      if (beat > end) { this.ppOffset = start; this.ppStart = performance.now(); this.lastBeat = start - 0.01; beat = start; }
       const t0 = this.ac().currentTime;
       const tr = ['capo1','capo3','real'].includes(this.state.playOpt) ? 0 : ((this.state.key - 10) % 12 + 18) % 12 - 6;
       Object.entries(PARTS).forEach(([id, p]) => {
@@ -395,6 +461,12 @@ class Component extends DCLogic {
     const ppb = 56, phX = w * 0.25;
     const lo = this.midiLo ?? 46, hi = this.midiHi ?? 78;
     const yOf = m => hgt - 32 - ((m - lo) / (hi - lo)) * (hgt - 56);
+    if (this.state.loopIdx !== null && this.phrases()[this.state.loopIdx]) {
+      const p = this.phrases()[this.state.loopIdx];
+      const xa = phX + (p.a - 0.5 - beat) * ppb, xb = phX + (p.b + 1 - beat) * ppb;
+      x2.fillStyle = 'rgba(207,96,56,.08)'; x2.fillRect(xa, 0, xb - xa, hgt);
+      x2.strokeStyle = 'rgba(207,96,56,.5)'; [xa, xb].forEach(x => { x2.beginPath(); x2.moveTo(x, 0); x2.lineTo(x, hgt); x2.stroke(); });
+    }
     for (let b = 0; b <= TOTAL; b += 4) { const x = phX + (b - beat) * ppb; x2.strokeStyle = '#e4d7c0'; x2.beginPath(); x2.moveTo(x, 0); x2.lineTo(x, hgt); x2.stroke(); }
     Object.entries(PARTS).forEach(([id, p]) => {
       p.ev.forEach(e => {
@@ -420,11 +492,57 @@ class Component extends DCLogic {
       x2.fillText(e.syl, x, hgt - 8);
     });
   }
+  _setupKey() { return 'chantbook:setup'; }
+  componentDidMount() {
+    if (this._mounted) return; this._mounted = true;
+    try {
+      const raw = localStorage.getItem(this._setupKey());
+      if (raw) {
+        const s = JSON.parse(raw);
+        const next = {};
+        if (['mic','guitar','ukulele','piano'].includes(s.instrument)) next.instrument = s.instrument;
+        if (typeof s.showMinis === 'boolean') next.showMinis = s.showMinis;
+        if (typeof s.capoOn === 'boolean') next.capoOn = s.capoOn;
+        if (typeof s.capo === 'number') next.capo = Math.max(0, Math.min(11, s.capo));
+        if (Object.keys(next).length) this.setState(next);
+      }
+    } catch (e) {}
+    this._onResize = () => { const n = window.innerWidth < 680; if (n !== this.state.narrow) this.setState({ narrow: n }); };
+    this._onResize();
+    const a = this.audioRef && this.audioRef.current;
+    if (a) {
+      this._audioSync = () => {
+        let d = isFinite(a.duration) && a.duration > 1 ? a.duration : 0;
+        if (!d && a.seekable && a.seekable.length) { const e = a.seekable.end(a.seekable.length - 1); if (isFinite(e) && e > 1) d = e; }
+        this.setState({ audioPos: a.currentTime || 0, audioDur: Math.max(d, this.state.audioDur || 0) });
+      };
+      ['timeupdate','loadedmetadata','durationchange','canplay','progress','playing'].forEach(ev => a.addEventListener(ev, this._audioSync));
+      this._audioEl = a;
+      this._audioSync();
+    }
+    window.addEventListener('resize', this._onResize);
+    if (this._didMountExtra) this._didMountExtra();
+  }
+  componentDidUpdate() {
+    const S = this.state;
+    const sig = JSON.stringify({ instrument: S.instrument, showMinis: S.showMinis, capoOn: S.capoOn, capo: S.capo });
+    if (sig !== this._setupSig) {
+      this._setupSig = sig;
+      try { localStorage.setItem(this._setupKey(), sig); } catch (e) {}
+    }
+    if (this._didUpdateExtra) this._didUpdateExtra.apply(this, arguments);
+  }
+  componentWillUnmount() {
+    if (this._onResize) window.removeEventListener('resize', this._onResize);
+    if (this._audioEl && this._audioSync) {
+      ['timeupdate','loadedmetadata','durationchange','canplay','progress','playing'].forEach(ev => this._audioEl.removeEventListener(ev, this._audioSync));
+    }
+  }
   renderVals() {
     const S = this.state, { NOTES, LYRICS, PARTS } = this.C;
     const ins = S.instrument ?? this.props.defaultInstrument ?? 'mic';
     const btn3d = on => ({ background: '#fbf6ec', border: '1px solid #d5c1a0', borderRadius: '10px', padding: '10px 22px 8px', cursor: 'pointer', textAlign: 'center', transition: 'all 120ms', boxShadow: on ? 'inset 0 3px 7px rgba(47,36,25,.3)' : '0 4px 0 #c9b48f, 0 6px 10px rgba(47,36,25,.12)', transform: on ? 'translateY(4px)' : 'none', fontFamily: "'EB Garamond', serif" });
-    const btn = on => ({ background: on ? '#cf6038' : 'transparent', color: on ? '#fbf6ec' : '#4a3b2b', border: '1px solid ' + (on ? '#cf6038' : '#c9b48f'), borderRadius: '8px', padding: '9px 20px', fontSize: '17px', cursor: 'pointer', transition: 'background 180ms', fontFamily: "'EB Garamond', serif" });
+    const btn = on => ({ background: on ? '#cf6038' : 'transparent', color: on ? '#fbf6ec' : '#4a3b2b', border: '1px solid ' + (on ? '#cf6038' : '#c9b48f'), borderRadius: '8px', boxShadow: on ? 'inset 0 -2px 0 rgba(0,0,0,.18)' : '0 2px 0 #d5c1a0, 0 3px 6px rgba(47,36,25,.12)', padding: '9px 20px', fontSize: '17px', cursor: 'pointer', transition: 'background 180ms', fontFamily: "'EB Garamond', serif" });
     const chordsOn = (this.props.chordsAlways ?? false) || ins !== 'mic';
     const setKey = (k, note) => this.setState({ key: k, keyNote: note || '' });
     const recOn = ['rec','capo1','capo3','real'].includes(S.playOpt);
@@ -443,39 +561,80 @@ class Component extends DCLogic {
       }
       if (recOn && ins === 'ukulele') playDetail = 'Playing in B\u266d as recorded — the boxes below show the shapes.';
     }
-    const instrumentNote = ins === 'piano' ? 'Every key works on a keyboard. The recording is in B♭ — or nudge the key to suit your voice. The chord boxes light up the notes.' : '';
-    const minisOn = S.showMinis && (ins === 'guitar' || ins === 'ukulele');
-    const miniBox = sym => { const f = (ins === 'ukulele' ? this.C.UKE : this.C.GUITAR)[this.chordKey(sym)]; return f ? this.fretEl(f, true) : null; };
+    if (ins === 'piano') {
+      playCards = [
+        { title: 'I\u2019m a total beginner', body: 'One press puts the chant in C — the easiest key here, with only one black note in the whole chant.', style: optBtn(S.playOpt === 'beginner'), pick: () => { this.setState({ playOpt: 'beginner', showMinis: true }); setKey(0, ''); } },
+        { title: 'Play along with the recording', body: 'Match the exact pitch of the recording (B♭).', style: optBtn(S.playOpt === 'real'), pick: () => { this.setState({ playOpt: 'real' }); setKey(10, ''); } }
+      ];
+      if (S.playOpt === 'beginner') playDetail = 'You\u2019re set — playing in C with C · F · G · Dm · B\u266d. Everything is white keys except the B\u266d chord, which uses one black note.';
+      if (S.playOpt === 'real') playDetail = 'Playing in B♭ as recorded — the keyboards below light up the notes.';
+    }
+    const instrumentNote = '';
+    const minisOn = S.showMinis && ins !== 'mic';
+    const stripMode = minisOn && S.narrow;
+    const miniBox = sym => { if (ins === 'piano') return this.pianoEl(sym, true); const f = (ins === 'ukulele' ? this.C.UKE : this.C.GUITAR)[this.chordKey(sym)]; return f ? this.fretEl(f, true) : null; };
     const ids = ['S','A','T'];
     return {
       audioRef: this.audioRef,
+      seekRowStyle: { display: S.audioDur > 5 ? 'flex' : 'none', alignItems: 'center', gap: '10px', marginTop: '8px', maxWidth: '420px' },
+      audioMax: String(S.audioDur || 0),
+      audioVal: String(S.audioPos || 0),
+      audioTime: (() => { const t = Math.max(0, (S.audioDur || 0) - (S.audioPos || 0)); const m = Math.floor(t / 60), s = Math.floor(t % 60); return '-' + m + ':' + (s < 10 ? '0' : '') + s; })(),
+      audioSeek: e => { const a = this.audioRef.current, v = parseFloat(e.target.value); if (a && isFinite(v)) { a.currentTime = v; this.setState({ audioPos: v }); } },
       audioGlyph: S.audioPlaying ? '❙❙' : '▶',
       toggleAudio: () => { const a = this.audioRef.current; if (!a) return; if (S.audioPlaying) { a.pause(); this.setState({ audioPlaying: false }); } else { a.play().then(() => this.setState({ audioPlaying: true })).catch(() => this.setState({ audioPlaying: false })); } },
       audioEnded: () => this.setState({ audioPlaying: false }),
       audioError: () => this.setState({ audioPlaying: false }),
-      printHref: 'there-is-the-body-print.html?key=' + S.key + (minisOn ? '&boxes=1' : ''),
-      lyricsPeek: S.lyricsPeek,
-      lyricsPeekLabel: S.lyricsPeek ? 'Hide the words ↑' : 'The words ↓',
-      toggleLyricsPeek: () => this.setState({ lyricsPeek: !S.lyricsPeek }),
-      peekStanzas: LYRICS.map(stz => stz.map(line => line.map(seg => seg[1]).join(''))),
+      printHref: 'there-is-the-body-print.html?key=' + S.key + (minisOn ? '&boxes=1' : '') + (ins !== 'mic' && ins !== 'guitar' ? '&ins=' + ins : '') + (S.capoOn && ins === 'guitar' && S.capo > 0 ? '&capo=' + S.capo : ''),
       showTools: ins !== 'mic',
       instruments: [['mic','🎤','Sing'],['guitar','🎸','Guitar'],['ukulele',null,'Ukulele'],['piano','🎹','Piano']].map(([id, icon, label]) => ({ icon: icon ?? this.ukeIcon(), label, style: btn3d(ins === id), pick: () => this.setState({ instrument: id, playOpt: null, keyNote: '', showMinis: false, key: 10 }) })),
-      showCards: ins === 'guitar' || ins === 'ukulele',
+      showCards: ins !== 'mic',
       playCards, playSubs, playDetail, instrumentNote,
-      showMiniTool: ins === 'guitar' || ins === 'ukulele',
+      showMiniTool: ins !== 'mic',
       toggleMinis: () => this.setState({ showMinis: !S.showMinis }),
+      showCapoTool: ins === 'guitar',
+      capoOn: S.capoOn,
+      capoLabel: 'Capo',
+      toggleCapo: () => this.setState({ capoOn: !S.capoOn }),
+      capoBtnStyle: btn(S.capoOn),
+      capoFret: String(S.capo),
+      capoOpacity: S.capoOn ? '1' : '0.45',
+      capoDown: () => this.setState({ capoOn: true, capo: Math.max(0, S.capo - 1) }),
+      capoUp: () => this.setState({ capoOn: true, capo: Math.min(11, S.capo + 1) }),
+      capoInput: e => { const v = parseInt(e.target.value, 10); this.setState({ capoOn: true, capo: isNaN(v) ? 0 : Math.max(0, Math.min(11, v)) }); },
       miniBtnStyle: btn(S.showMinis),
-      keyNote: S.keyNote,
+      keyNote: (S.capoOn && ins === 'guitar' && S.capo > 0) ? ('Capo on fret ' + S.capo + ' — the shapes below sound in ' + NOTES[S.key]) : S.keyNote,
       keyName: NOTES[S.key],
       keyDown: () => setKey((S.key + 11) % 12, ''),
       keyUp: () => setKey((S.key + 1) % 12, ''),
       showBoxes: ins !== 'mic',
       boxes: ['IV','I','V','ii','bVII'].map(sym => ({ name: this.chordName(sym), el: this.diagramEl(sym) })),
-      chordStyle: chordsOn ? { display: 'flex', alignItems: 'center', gap: '6px', minHeight: minisOn ? '64px' : '30px', fontSize: '24px', fontWeight: 700, color: '#cf6038', letterSpacing: '.02em', fontFamily: "'EB Garamond', serif", lineHeight: 1 } : { display: 'none' },
-      lyricStanzas: LYRICS.map(stz => stz.map(line => line.map(([sym, tx, sub, gap]) => ({ ch: chordsOn && sym ? this.chordName(sym) : '', box: minisOn && sym ? miniBox(sym) : null, tx: (gap && chordsOn ? '\u00a0\u00a0\u00a0\u00a0\u00a0' : '') + tx, sub: sub || '' })))),
+      chordStyle: chordsOn ? ((minisOn && !stripMode)
+        ? { display: 'flex', flexDirection: 'column', alignItems: 'stretch', textAlign: 'center', width: 'max-content', gap: '3px', minHeight: '86px', justifyContent: 'flex-end', fontSize: '17px', fontWeight: 700, color: '#cf6038', letterSpacing: '.04em', fontFamily: "'EB Garamond', serif", lineHeight: 1 }
+        : { display: 'flex', alignItems: 'center', gap: '6px', minHeight: '30px', fontSize: '24px', fontWeight: 700, color: '#cf6038', letterSpacing: '.02em', fontFamily: "'EB Garamond', serif", lineHeight: 1 }) : { display: 'none' },
+      lyricStanzas: LYRICS.map(stz => stz.map(line => ({
+        segs: line.map(([sym, tx, sub, gap]) => ({ ch: chordsOn && sym ? this.chordName(sym) : '', box: (minisOn && !stripMode && sym) ? miniBox(sym) : null, tx: (gap && chordsOn ? '\u00a0\u00a0\u00a0\u00a0\u00a0' : '') + tx, sub: sub || '' })),
+        chords: stripMode ? line.filter(seg => seg[0]).map(seg => ({ ch: this.chordName(seg[0]), box: miniBox(seg[0]) })) : [],
+        showStrip: stripMode && line.some(seg => seg[0])
+      }))),
+      loopOn: S.loopIdx !== null,
+      loopBtnStyle: btn(S.loopIdx !== null),
+      loopLabel: S.loopIdx !== null ? 'Looping' : 'Loop a part',
+      loopWhich: (() => { const n = this.phrases().length; return S.loopIdx !== null ? (S.loopIdx + 1) + ' of ' + n : ''; })(),
+      loopToggle: () => {
+        if (S.loopIdx !== null) return this.setState({ loopIdx: null });
+        const ps = this.phrases(); if (!ps.length) return;
+        const b = this.ppBeat();
+        let i = ps.findIndex(p => b >= p.a - 0.5 && b <= p.b + 1);
+        if (i < 0) i = 0;
+        this.ppOffset = Math.max(0, ps[i].a - 0.5); this.ppStart = performance.now(); this.lastBeat = this.ppOffset - 0.01;
+        this.setState({ loopIdx: i });
+      },
+      loopPrev: () => { const ps = this.phrases(); if (S.loopIdx === null || !ps.length) return; const i = (S.loopIdx - 1 + ps.length) % ps.length; this.ppOffset = Math.max(0, ps[i].a - 0.5); this.ppStart = performance.now(); this.lastBeat = this.ppOffset - 0.01; this.setState({ loopIdx: i }); },
+      loopNext: () => { const ps = this.phrases(); if (S.loopIdx === null || !ps.length) return; const i = (S.loopIdx + 1) % ps.length; this.ppOffset = Math.max(0, ps[i].a - 0.5); this.ppStart = performance.now(); this.lastBeat = this.ppOffset - 0.01; this.setState({ loopIdx: i }); },
       ppCanvas: this.ppCanvas,
       ppGlyph: S.ppPlaying ? '❙❙' : '▶',
-      ppToggle: () => { if (S.ppPlaying) { this.ppOffset = this.ppBeat(); this.setState({ ppPlaying: false }); } else { this.ac(); this.ppStart = performance.now(); this.lastBeat = this.ppOffset - 0.01; this.setState({ ppPlaying: true }); } },
+      ppToggle: () => { this.acResume(); if (S.ppPlaying) { this.ppOffset = this.ppBeat(); this.setState({ ppPlaying: false }); } else { this.acResume(); this.ppStart = performance.now(); this.lastBeat = this.ppOffset - 0.01; this.setState({ ppPlaying: true }); } },
       ppDown: e => { this.dragging = true; this.dragX = e.clientX; this.dragBeat = this.ppBeat(); e.target.setPointerCapture(e.pointerId); e.target.style.cursor = 'grabbing'; },
       ppMove: e => { if (!this.dragging) return; const b = Math.max(0, Math.min(this.C.TOTAL, this.dragBeat - (e.clientX - this.dragX) / 56)); this.ppOffset = b; this.ppStart = performance.now(); this.lastBeat = b - 0.01; },
       ppUp: e => { this.dragging = false; e.target.style.cursor = 'grab'; this.forceUpdate(); },
