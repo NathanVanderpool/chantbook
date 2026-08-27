@@ -275,7 +275,7 @@ class Component extends DCLogic {
       '9': [2,1,0,0], '9m': [2,0,0,0], '10': [3,2,1,1], '10m': [3,1,1,1], '11': [4,3,2,2], '11m': [4,2,2,2]
     };
     const LYRICS = [
-      [[['','There is the '],['IV','body '],['I','and the '],['V','opening']],
+      [[['','There is the '],['IV','body '],['I','and the ',null,1],['V','opening']],
        [['IV','Remember, ','(surrender) '],['I','\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0rem','\u00a0'],['V','ember ×2','(surrender)']]],
       [[['ii','The oceanic '],['I','feeling, '],['ii','the amniotic '],['I','deep']],
        [['bVII','Always here and now, '],['IV','where else would it '],['V','be?']]]
@@ -472,7 +472,7 @@ class Component extends DCLogic {
       showBoxes: ins !== 'mic',
       boxes: ['IV','I','V','ii','bVII'].map(sym => ({ name: this.chordName(sym), el: this.diagramEl(sym) })),
       chordStyle: chordsOn ? { display: 'flex', alignItems: 'center', gap: '6px', minHeight: minisOn ? '64px' : '30px', fontSize: '24px', fontWeight: 700, color: '#cf6038', letterSpacing: '.02em', fontFamily: "'EB Garamond', serif", lineHeight: 1 } : { display: 'none' },
-      lyricStanzas: LYRICS.map(stz => stz.map(line => line.map(([sym, tx, sub]) => ({ ch: chordsOn && sym ? this.chordName(sym) : '', box: minisOn && sym ? miniBox(sym) : null, tx, sub: sub || '' })))),
+      lyricStanzas: LYRICS.map(stz => stz.map(line => line.map(([sym, tx, sub, gap]) => ({ ch: chordsOn && sym ? this.chordName(sym) : '', box: minisOn && sym ? miniBox(sym) : null, tx: (gap && chordsOn ? '\u00a0\u00a0\u00a0\u00a0\u00a0' : '') + tx, sub: sub || '' })))),
       ppCanvas: this.ppCanvas,
       ppGlyph: S.ppPlaying ? '❙❙' : '▶',
       ppToggle: () => { if (S.ppPlaying) { this.ppOffset = this.ppBeat(); this.setState({ ppPlaying: false }); } else { this.ac(); this.ppStart = performance.now(); this.lastBeat = this.ppOffset - 0.01; this.setState({ ppPlaying: true }); } },

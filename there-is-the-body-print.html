@@ -96,7 +96,7 @@ class Component extends DCLogic {
     const name = sym => { const [o,q] = DEG[sym]; return NOTES[(key + o) % 12] + q; };
     const shape = sym => { const [o,q] = DEG[sym]; return GUITAR[String((key + o) % 12) + q]; };
     const L = [
-      [[['','There is the '],['IV','body '],['I','and the '],['V','opening']],
+      [[['','There is the '],['IV','body '],['I','\u00a0\u00a0\u00a0\u00a0\u00a0and the '],['V','opening']],
        [['IV','Remember, ','(surrender) '],['I','\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0rem','\u00a0'],['V','ember \u00d72','(surrender)']]],
       [[['ii','The oceanic '],['I','feeling, '],['ii','the amniotic '],['I','deep']],
        [['bVII','Always here and now, '],['IV','where else would it '],['V','be?']]]
