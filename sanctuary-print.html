@@ -136,15 +136,15 @@ class Component extends DCLogic {
        [['I','No escape from the '],['V','tree of life']]]
     ];
     return {
-      keyName: NOTES[key],
-      keyLine: isVoice ? '' : ' \u00b7 in ' + NOTES[key],
+      keyName: NOTES[(key + 7) % 12],
+      keyLine: isVoice ? '' : ' \u00b7 in ' + NOTES[(key + 7) % 12],
       showBoxRow: !isVoice && !boxesOn,
       chordRowStyle: isVoice ? { display: 'none' } : boxesOn
         ? { display: 'flex', flexDirection: 'column', alignItems: 'stretch', textAlign: 'center', width: 'max-content', justifyContent: 'flex-end', gap: '0px', minHeight: '40px', fontSize: '11px', fontWeight: 600, color: '#a8451f', lineHeight: 1.1 }
         : { display: 'flex', alignItems: 'center', gap: '4px', minHeight: '21px', fontSize: '16px', fontWeight: 600, color: '#a8451f', lineHeight: 1 },
       stanzas: L.map(st => st.map(ln => ln.map(([sym, tx]) => ({ ch: (sym && !isVoice) ? name(sym) : '', box: !isVoice && boxesOn && sym ? dia(sym, true) : null, tx })))),
       boxes: ['V','IV','I'].map(sym => ({ name: name(sym), el: dia(sym, false) })),
-      shapeNote: isVoice ? '' : capo > 0 ? 'Capo on fret ' + capo + ' — these shapes sound in ' + NOTES[key] : isPiano ? 'Keyboard voicings for the key of ' + NOTES[key] : isUke ? 'Ukulele shapes for the key of ' + NOTES[key] : (key === 3 ? 'Guitar shapes in E♭ as recorded — or capo 1 and play D shapes (A · G · D)' : 'Guitar shapes for the key of ' + NOTES[key])
+      shapeNote: isVoice ? '' : capo > 0 ? 'Capo on fret ' + capo + ' — these shapes sound in ' + NOTES[(key + 7) % 12] : isPiano ? 'Keyboard voicings for the key of ' + NOTES[(key + 7) % 12] : isUke ? 'Ukulele shapes for the key of ' + NOTES[(key + 7) % 12] : (key === 3 ? 'Guitar shapes in E♭ as recorded — or capo 1 and play D shapes (A · G · D)' : 'Guitar shapes for the key of ' + NOTES[(key + 7) % 12])
     };
   }
 }
