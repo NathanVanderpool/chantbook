@@ -10,12 +10,18 @@
 <helmet>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400;1,500&amp;family=EB+Garamond:ital,wght@0,400;0,500;1,400&amp;display=swap" rel="stylesheet">
+<script src="word-timing.js"></script>
 <style>
 body{margin:0;background:#f6efe1;color:#4a3b2b;font-family:'EB Garamond',serif;font-size:18px;line-height:1.6;}
 body::before{content:'';position:fixed;inset:0;pointer-events:none;opacity:.05;z-index:60;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");}
 a{color:#cf6038;text-decoration:none;}a:hover{color:#a8451f;}
 p,h1,h2,h3{text-wrap:pretty;margin:0;}
 button{font-family:'EB Garamond',serif;}
+input[type=range]{-webkit-appearance:none;appearance:none;background:transparent;}
+input[type=range]::-webkit-slider-runnable-track{height:7px;border-radius:99px;background:linear-gradient(#e0d0b2,#f2e8d6);border:1px solid #c9b48f;box-shadow:inset 0 1px 3px rgba(47,36,25,.3);}
+input[type=range]::-moz-range-track{height:7px;border-radius:99px;background:linear-gradient(#e0d0b2,#f2e8d6);border:1px solid #c9b48f;box-shadow:inset 0 1px 3px rgba(47,36,25,.3);}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:linear-gradient(#e88a60,#cf6038 55%,#ab4a26);border:1px solid #a8451f;margin-top:-7px;box-shadow:0 2px 4px rgba(47,36,25,.35),inset 0 1px 1px rgba(255,255,255,.5);}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:linear-gradient(#e88a60,#cf6038 55%,#ab4a26);border:1px solid #a8451f;box-shadow:0 2px 4px rgba(47,36,25,.35),inset 0 1px 1px rgba(255,255,255,.5);}
 </style>
 </helmet>
 <div>
@@ -31,24 +37,24 @@ button{font-family:'EB Garamond',serif;}
 <main style="max-width:820px;margin:0 auto;width:100%;box-sizing:border-box;">
   <h1 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(38px,4.4vw,58px);line-height:1.12;color:#2f2419;">There Is the Body</h1>
   <p style="font-style:italic;color:#7f6d55;font-size:19px;margin-top:6px;">with Gabe</p>
-  <p style="font-size:15px;color:#6f5f4a;margin-top:10px;">Free to sing &amp; share · <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></p>
 
   <div style="margin-top:28px;background:#fbf6ec;border:1px solid #d5c1a0;border-radius:8px;padding:22px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
     <div style="flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:7px;width:128px;">
       <img src="assets/art-there-is-the-body.jpg" alt="There Is the Body" style="width:128px;height:128px;object-fit:cover;border-radius:6px;box-shadow:0 3px 10px rgba(47,36,25,.2);" />
-      <span style="font-size:13px;color:#8d7c63;font-style:italic;text-align:center;">Art with <a href="https://www.instagram.com/roevardotter__/" target="_blank" rel="noopener">Ronja Polzin</a></span>
     </div>
-    <button onClick="{{ toggleAudio }}" style="width:58px;height:58px;border-radius:50%;background:#cf6038;color:#fbf6ec;border:none;font-size:20px;cursor:pointer;flex:0 0 auto;transition:background 180ms;" style-hover="background:#a8451f;">{{ audioGlyph }}</button>
+    <button onClick="{{ toggleAudio }}" style="width:58px;height:58px;border-radius:50%;background:linear-gradient(#e07f55,#cf6038 55%,#ab4a26);color:#fbf6ec;border:1px solid #a8451f;cursor:pointer;flex:0 0 auto;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 6px rgba(47,36,25,.32),inset 0 1px 1px rgba(255,255,255,.45);transition:filter 140ms,box-shadow 140ms,transform 140ms;" style-hover="filter:brightness(1.07);" style-active="transform:translateY(1px);box-shadow:0 1px 2px rgba(47,36,25,.3),inset 0 2px 5px rgba(47,36,25,.4);" aria-label="Play the recording">
+      <sc-if value="{{ audioIsPlaying }}" hint-placeholder-val="{{ false }}"><span style="display:flex;gap:5px;"><span style="width:5px;height:18px;border-radius:1px;background:#fbf6ec;"></span><span style="width:5px;height:18px;border-radius:1px;background:#fbf6ec;"></span></span></sc-if>
+      <sc-if value="{{ audioIsPaused }}" hint-placeholder-val="{{ true }}"><span style="width:0;height:0;border-left:16px solid #fbf6ec;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px;"></span></sc-if>
+    </button>
     <div style="flex:1 1 220px;">
       <div style="font-size:19px;color:#2f2419;"><strong>There Is the Body</strong> <span style="font-style:italic;color:#7f6d55;">— with Gabe</span></div>
-      <a href="#lyrics" style="font-size:16px;">Lyrics and chords below ↓</a>
       <div style="{{ seekRowStyle }}">
-        <input type="range" min="0" max="{{ audioMax }}" step="0.1" value="{{ audioVal }}" onChange="{{ audioSeek }}" aria-label="Seek" style="flex:1 1 120px;accent-color:#cf6038;cursor:pointer;height:4px;" />
+        <input type="range" min="0" max="{{ audioMax }}" step="0.1" value="{{ audioVal }}" onChange="{{ audioSeek }}" aria-label="Seek" style="flex:1 1 120px;accent-color:#cf6038;cursor:pointer;height:22px;" />
         <span style="font-size:14px;color:#7f6d55;font-variant-numeric:tabular-nums;flex:0 0 auto;">{{ audioTime }}</span>
       </div>
     </div>
-    <a href="{{ printHref }}" style="font-size:16px;flex:0 0 auto;">Print sheet →</a>
   </div>
+  <p style="font-size:15px;color:#6f5f4a;margin-top:10px;">Free to sing &amp; share · <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></p>
   <audio ref="{{ audioRef }}" style="display:none;" src="audio/there-is-the-body.mp3" preload="metadata" onEnded="{{ audioEnded }}" onError="{{ audioError }}"></audio>
 </main>
 </section>
@@ -60,7 +66,7 @@ button{font-family:'EB Garamond',serif;}
   </div>
 </section>
 
-<main style="max-width:820px;margin:0 auto;width:100%;padding:48px 24px 0;box-sizing:border-box;">
+<main id="pick" style="max-width:820px;margin:0 auto;width:100%;padding:48px 24px 0;box-sizing:border-box;">
   <div style="font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:#7d6a51;">Pick your instrument</div>
   <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:18px;">
     <sc-for list="{{ instruments }}" as="i" hint-placeholder-count="4">
@@ -139,7 +145,13 @@ button{font-family:'EB Garamond',serif;}
     </div>
   </sc-if>
 
-  <div id="lyrics" style="margin-top:52px;">
+  <div style="margin-top:44px;">
+    <sc-if value="{{ singing }}" hint-placeholder-val="{{ false }}">
+      <a href="#harmony" style="font-size:16px;">Learn a harmony →</a>
+    </sc-if>
+  </div>
+
+  <div id="lyrics" style="margin-top:28px;">
     <div>
       <sc-for list="{{ lyricStanzas }}" as="st" hint-placeholder-count="2">
         <div style="margin-bottom:30px;">
@@ -156,8 +168,8 @@ button{font-family:'EB Garamond',serif;}
               <sc-for list="{{ ln.segs }}" as="seg" hint-placeholder-count="2">
                 <span style="display:inline-block;vertical-align:bottom;">
                   <span style="{{ chordStyle }}">{{ seg.ch }}{{ seg.box }}</span>
-                  <span style="display:block;font-family:'Cormorant Garamond',serif;font-size:27px;line-height:1.35;color:#2f2419;white-space:pre-wrap;">{{ seg.tx }}</span>
-                  <span style="display:block;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;line-height:1.25;color:#6f5f4a;white-space:pre-wrap;">{{ seg.sub }}</span>
+                  <span style="display:block;font-family:'Cormorant Garamond',serif;font-size:27px;line-height:1.35;color:#2f2419;white-space:pre-wrap;"><sc-for list="{{ seg.words }}" as="w" hint-placeholder-count="3"><span data-w="{{ w.w }}" style="color:inherit;transition:color 180ms, opacity 220ms, font-weight 180ms;">{{ w.tx }}</span></sc-for></span>
+                  <span style="display:block;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;line-height:1.25;color:#6f5f4a;white-space:pre-wrap;"><sc-for list="{{ seg.subWords }}" as="w" hint-placeholder-count="1"><span data-sw="{{ w.w }}" style="color:inherit;transition:color 180ms, opacity 220ms, font-weight 180ms;">{{ w.tx }}</span></sc-for></span>
                 </span>
               </sc-for>
               </div>
@@ -168,13 +180,15 @@ button{font-family:'EB Garamond',serif;}
     </div>
   </div>
 
+  <div style="margin-top:32px;"><a href="{{ printHref }}" style="font-size:16px;">Print sheet →</a></div>
+
   <div style="margin-top:20px;background:#fbf6ec;border:1px solid #e4d7c0;border-radius:8px;padding:14px 18px;max-width:520px;">
     <p style="font-size:16px;color:#5c4b38;">The chants are free. <a href="donate.html">Your support helps make more of them ♡</a></p>
   </div>
 
 </main>
 
-<section style="margin-top:56px;padding:0 24px 56px;">
+<section id="harmony" style="margin-top:56px;padding:0 24px 56px;">
   <div style="max-width:820px;margin:0 auto;">
     <div style="font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:#7d6a51;">Learn a harmony</div>
     <details style="margin-top:8px;max-width:640px;">
@@ -198,7 +212,10 @@ button{font-family:'EB Garamond',serif;}
       <canvas ref="{{ ppCanvas }}" onPointerDown="{{ ppDown }}" onPointerMove="{{ ppMove }}" onPointerUp="{{ ppUp }}" onPointerCancel="{{ ppUp }}" style="width:100%;height:200px;display:block;cursor:grab;border-radius:8px;touch-action:pan-y;"></canvas>
       <div style="font-size:14px;color:#7f6d55;margin-top:6px;">Drag the notes left or right to move where it plays from</div>
       <div style="display:flex;gap:12px;align-items:center;margin-top:16px;flex-wrap:wrap;">
-        <button onClick="{{ ppToggle }}" style="width:48px;height:48px;border-radius:50%;background:#cf6038;color:#fbf6ec;border:none;font-size:17px;cursor:pointer;transition:background 180ms;" style-hover="background:#a8451f;">{{ ppGlyph }}</button>
+        <button onClick="{{ ppToggle }}" style="width:48px;height:48px;border-radius:50%;background:linear-gradient(#e07f55,#cf6038 55%,#ab4a26);color:#fbf6ec;border:1px solid #a8451f;cursor:pointer;flex:0 0 auto;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 6px rgba(47,36,25,.32),inset 0 1px 1px rgba(255,255,255,.45);transition:filter 140ms,box-shadow 140ms,transform 140ms;" style-hover="filter:brightness(1.07);" style-active="transform:translateY(1px);box-shadow:0 1px 2px rgba(47,36,25,.3),inset 0 2px 5px rgba(47,36,25,.4);" aria-label="Play the harmony parts">
+      <sc-if value="{{ ppIsPlaying }}" hint-placeholder-val="{{ false }}"><span style="display:flex;gap:5px;"><span style="width:4px;height:15px;border-radius:1px;background:#fbf6ec;"></span><span style="width:4px;height:15px;border-radius:1px;background:#fbf6ec;"></span></span></sc-if>
+      <sc-if value="{{ ppIsPaused }}" hint-placeholder-val="{{ true }}"><span style="width:0;height:0;border-left:13px solid #fbf6ec;border-top:8px solid transparent;border-bottom:8px solid transparent;margin-left:3px;"></span></sc-if>
+    </button>
         <sc-for list="{{ ppVoices }}" as="v" hint-placeholder-count="3">
           <span style="display:flex;align-items:stretch;">
             <button onClick="{{ v.pick }}" style="{{ v.style }}">{{ v.label }}</button>
@@ -206,9 +223,9 @@ button{font-family:'EB Garamond',serif;}
           </span>
         </sc-for>
         <span style="display:flex;align-items:stretch;margin-left:12px;" title="Key — linked to the key selector above">
-          <button onClick="{{ keyDown }}" style="width:34px;border:1px solid #c9b48f;border-right:none;border-radius:8px 0 0 8px;background:transparent;color:#4a3b2b;font-size:17px;cursor:pointer;">−</button>
+          <button onClick="{{ keyDown }}" style="width:34px;border:1px solid #c9b48f;border-right:none;border-radius:8px 0 0 8px;background:#fbf6ec;color:#4a3b2b;font-size:17px;cursor:pointer;box-shadow:0 2px 0 #d5c1a0, 0 3px 6px rgba(47,36,25,.12);">−</button>
           <span style="min-width:44px;border:1px solid #c9b48f;background:#f6efe1;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:19px;color:#2f2419;padding:2px 8px;box-sizing:border-box;">{{ keyName }}</span>
-          <button onClick="{{ keyUp }}" style="width:34px;border:1px solid #c9b48f;border-left:none;border-radius:0 8px 8px 0;background:transparent;color:#4a3b2b;font-size:17px;cursor:pointer;">+</button>
+          <button onClick="{{ keyUp }}" style="width:34px;border:1px solid #c9b48f;border-left:none;border-radius:0 8px 8px 0;background:#fbf6ec;color:#4a3b2b;font-size:17px;cursor:pointer;box-shadow:0 2px 0 #d5c1a0, 0 3px 6px rgba(47,36,25,.12);">+</button>
         </span>
         <sc-if value="{{ ppAlong }}" hint-placeholder-val="{{ false }}">
           <span style="font-size:15px;font-style:italic;color:#6f5f4a;">playing in B♭ — the recording's key, so you can play along</span>
@@ -369,8 +386,24 @@ class Component extends DCLogic {
     const f = db[this.chordKey(sym)];
     return f ? this.fretEl(f) : null;
   }
-  acResume() { const c = this.ac(); if (c && c.state === 'suspended' && c.resume) c.resume(); return c; }
-  ac() { if (!this._ac) this._ac = new (window.AudioContext || window.webkitAudioContext)(); if (this._ac.state === 'suspended') this._ac.resume(); return this._ac; }
+  acResume() {
+    const c = this.ac();
+    // iOS: the context only truly opens if a buffer starts inside the tap handler
+    if (c && !this._acUnlocked) {
+      try { const b = c.createBuffer(1, 1, 22050), s = c.createBufferSource(); s.buffer = b; s.connect(c.destination); s.start(0); this._acUnlocked = true; } catch (e) {}
+    }
+    if (c && c.state === 'suspended' && c.resume) c.resume();
+    return c;
+  }
+  ac() {
+    if (!this._ac) {
+      this._ac = new (window.AudioContext || window.webkitAudioContext)();
+      // iOS 16.4+: 'playback' makes Web Audio ignore the ringer/silent switch
+      try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}
+    }
+    if (this._ac.state === 'suspended' && this._ac.resume) this._ac.resume();
+    return this._ac;
+  }
   tone(midi, t0, dur, vol) {
     const ac = this.ac(), f = 440 * Math.pow(2, (midi - 69) / 12);
     const g = ac.createGain(); g.connect(ac.destination);
@@ -383,8 +416,10 @@ class Component extends DCLogic {
     });
   }
   _didMountExtra() {
-    const loop = () => { this.raf = requestAnimationFrame(loop); this.ppFrame(); };
+    this._hlIdx = -1;
+    const loop = () => { this.raf = requestAnimationFrame(loop); this.ppFrame(); this.hlFrame(); };
     this.raf = requestAnimationFrame(loop);
+    fetch('assets/there-is-the-body-timings.json').then(r => r.ok ? r.json() : null).then(d => { if (d && Array.isArray(d.events)) { this._timings = d; this._evCache = null; } }).catch(() => {});
     fetch('assets/there-is-the-body-parts.json').then(r => r.json()).then(d => {
       const map = { S: 'P1', A: 'P2', T: 'P3' };
       let total = 0;
@@ -400,6 +435,58 @@ class Component extends DCLogic {
     }).catch(() => {});
   }
   componentWillUnmount() { cancelAnimationFrame(this.raf); }
+  wordVerse() {
+    if (this._wv) return this._wv;
+    const map = {};
+    this.tok().stanzas.forEach((stz, zi) => stz.forEach(line => line.forEach(seg => seg.parts.forEach(p => { if (p.w >= 0) map[p.w] = zi; }))));
+    return (this._wv = map);
+  }
+  tok() { if (!this._tok) this._tok = (window.WT ? window.WT.tokenize(this.C.LYRICS) : { stanzas: [], words: [] }); return this._tok; }
+  hlEvents() {
+    const T = this._timings; if (!T) return null;
+    if (this._evCache) return this._evCache;
+    let ev = Array.isArray(T.events) ? T.events.slice() : null;
+    if (!ev) return null;
+    ev.sort((a, b) => a[1] - b[1]);
+    return (this._evCache = ev);
+  }
+  hlFrame() {
+    const a = this.audioRef.current, ev = this.hlEvents();
+    if (!a || !ev || !ev.length) return;
+    if (a.paused) { if (this._hlIdx !== -1) this.setHl(-1); return; }
+    const t = a.currentTime + ((this._timings.offset) || 0);
+    let k = -1;
+    for (let j = 0; j < ev.length; j++) { if (ev[j][1] <= t) k = j; else break; }
+    let i = -1;
+    if (k >= 0) {
+      const hold = (this._timings.hold || 4);
+      const next = ev[k + 1] ? ev[k + 1][1] : ev[k][1] + hold;
+      i = (t < Math.min(next, ev[k][1] + hold)) ? ev[k][0] : -1;
+    }
+    const sb = (k >= 0 && i >= 0) ? !!ev[k][2] : false;
+    if (i !== this._hlIdx || sb !== this._hlSub) this.setHl(i, sb);
+  }
+  setHl(i, sub) {
+    this._hlIdx = i; this._hlSub = sub;
+    const root = document.getElementById('lyrics'); if (!root) return;
+    if (!this._sung) this._sung = {};
+    const clear = n2 => { n2.style.color = ''; n2.style.opacity = ''; n2.style.fontWeight = ''; };
+    if (i < 0) { this._sung = {}; root.querySelectorAll('[data-w],[data-sw]').forEach(clear); return; }
+    if (this._sung[i]) this._sung = {};
+    this._sung[i] = true;
+    const vz = this.wordVerse(), here = vz[i];
+    const paint = (n2, w) => {
+      if (vz[w] !== here) { clear(n2); return; }
+      if (w === i) { n2.style.color = '#a8451f'; n2.style.fontWeight = '600'; n2.style.opacity = '1'; }
+      else if (this._sung[w]) { n2.style.color = ''; n2.style.fontWeight = ''; n2.style.opacity = '1'; }
+      else { n2.style.color = '#8d7c63'; n2.style.fontWeight = ''; n2.style.opacity = '0.55'; }
+    };
+    const hasSub = {};
+    root.querySelectorAll('[data-sw]').forEach(n2 => { const w = +n2.dataset.sw; if (w >= 0) hasSub[w] = true; });
+    root.querySelectorAll('[data-w]').forEach(n2 => { const w = +n2.dataset.w; if (sub && hasSub[w]) { clear(n2); return; } paint(n2, w); });
+    root.querySelectorAll('[data-sw]').forEach(n2 => { const w = +n2.dataset.sw; if (!sub || w < 0) { clear(n2); return; } paint(n2, w); });
+  }
+
   phrases() {
     const ev = Object.values(this.C.PARTS).flatMap(p => p.ev).slice().sort((a, b) => a.t - b.t);
     if (this._phrases && this._phrasesN === ev.length) return this._phrases;
@@ -576,17 +663,18 @@ class Component extends DCLogic {
     const ids = ['S','A','T'];
     return {
       audioRef: this.audioRef,
-      seekRowStyle: { display: S.audioDur > 5 ? 'flex' : 'none', alignItems: 'center', gap: '10px', marginTop: '8px', maxWidth: '420px' },
+      seekRowStyle: { display: 'flex', alignItems: 'center', gap: '10px', marginTop: '10px', maxWidth: '420px' },
       audioMax: String(S.audioDur || 0),
       audioVal: String(S.audioPos || 0),
       audioTime: (() => { const t = Math.max(0, (S.audioDur || 0) - (S.audioPos || 0)); const m = Math.floor(t / 60), s = Math.floor(t % 60); return '-' + m + ':' + (s < 10 ? '0' : '') + s; })(),
       audioSeek: e => { const a = this.audioRef.current, v = parseFloat(e.target.value); if (a && isFinite(v)) { a.currentTime = v; this.setState({ audioPos: v }); } },
-      audioGlyph: S.audioPlaying ? '❙❙' : '▶',
+      audioIsPlaying: !!S.audioPlaying, audioIsPaused: !S.audioPlaying,
       toggleAudio: () => { const a = this.audioRef.current; if (!a) return; if (S.audioPlaying) { a.pause(); this.setState({ audioPlaying: false }); } else { a.play().then(() => this.setState({ audioPlaying: true })).catch(() => this.setState({ audioPlaying: false })); } },
       audioEnded: () => this.setState({ audioPlaying: false }),
       audioError: () => this.setState({ audioPlaying: false }),
-      printHref: 'there-is-the-body-print.html?key=' + S.key + (minisOn ? '&boxes=1' : '') + (ins !== 'mic' && ins !== 'guitar' ? '&ins=' + ins : '') + (S.capoOn && ins === 'guitar' && S.capo > 0 ? '&capo=' + S.capo : ''),
+      printHref: 'there-is-the-body-print.html?ins=' + ins + '&key=' + S.key + (minisOn ? '&boxes=1' : '') + (S.capoOn && ins === 'guitar' && S.capo > 0 ? '&capo=' + S.capo : ''),
       showTools: ins !== 'mic',
+      singing: ins === 'mic',
       instruments: [['mic','🎤','Sing'],['guitar','🎸','Guitar'],['ukulele',null,'Ukulele'],['piano','🎹','Piano']].map(([id, icon, label]) => ({ icon: icon ?? this.ukeIcon(), label, style: btn3d(ins === id), pick: () => this.setState({ instrument: id, playOpt: null, keyNote: '', showMinis: false, key: 10 }) })),
       showCards: ins !== 'mic',
       playCards, playSubs, playDetail, instrumentNote,
@@ -612,11 +700,11 @@ class Component extends DCLogic {
       chordStyle: chordsOn ? ((minisOn && !stripMode)
         ? { display: 'flex', flexDirection: 'column', alignItems: 'stretch', textAlign: 'center', width: 'max-content', gap: '3px', minHeight: '86px', justifyContent: 'flex-end', fontSize: '17px', fontWeight: 700, color: '#cf6038', letterSpacing: '.04em', fontFamily: "'EB Garamond', serif", lineHeight: 1 }
         : { display: 'flex', alignItems: 'center', gap: '6px', minHeight: '30px', fontSize: '24px', fontWeight: 700, color: '#cf6038', letterSpacing: '.02em', fontFamily: "'EB Garamond', serif", lineHeight: 1 }) : { display: 'none' },
-      lyricStanzas: LYRICS.map(stz => stz.map(line => ({
-        segs: line.map(([sym, tx, sub, gap]) => ({ ch: chordsOn && sym ? this.chordName(sym) : '', box: (minisOn && !stripMode && sym) ? miniBox(sym) : null, tx: (gap && chordsOn ? '\u00a0\u00a0\u00a0\u00a0\u00a0' : '') + tx, sub: sub || '' })),
+      lyricStanzas: (() => { const TOK = this.tok(); return LYRICS.map((stz, zi) => stz.map((line, lj) => ({
+        segs: line.map(([sym, tx, sub, gap], si) => { const pad = (gap && chordsOn) ? '\u00a0\u00a0\u00a0\u00a0\u00a0' : ''; const parts = ((TOK.stanzas[zi] || [])[lj] || [])[si] ? TOK.stanzas[zi][lj][si].parts : [{ tx, w: -1 }]; return ({ ch: chordsOn && sym ? this.chordName(sym) : '', box: (minisOn && !stripMode && sym) ? miniBox(sym) : null, tx: pad + tx, sub: sub || '', words: (pad ? [{ tx: pad, w: -1 }] : []).concat(parts), subWords: (() => { const idxs = []; parts.forEach(p => { if (p.w >= 0 && idxs.indexOf(p.w) === -1) idxs.push(p.w); }); let k = 0; return (sub || '').split(/(\s+)/).filter(s => s.length).map(t => /^\s+$/.test(t) ? { tx: t, w: -1 } : { tx: t, w: (idxs[k] !== undefined ? idxs[k++] : -1) }); })() }); }),
         chords: stripMode ? line.filter(seg => seg[0]).map(seg => ({ ch: this.chordName(seg[0]), box: miniBox(seg[0]) })) : [],
         showStrip: stripMode && line.some(seg => seg[0])
-      }))),
+      }))); })(),
       loopOn: S.loopIdx !== null,
       loopBtnStyle: btn(S.loopIdx !== null),
       loopLabel: S.loopIdx !== null ? 'Looping' : 'Loop a part',
@@ -633,7 +721,7 @@ class Component extends DCLogic {
       loopPrev: () => { const ps = this.phrases(); if (S.loopIdx === null || !ps.length) return; const i = (S.loopIdx - 1 + ps.length) % ps.length; this.ppOffset = Math.max(0, ps[i].a - 0.5); this.ppStart = performance.now(); this.lastBeat = this.ppOffset - 0.01; this.setState({ loopIdx: i }); },
       loopNext: () => { const ps = this.phrases(); if (S.loopIdx === null || !ps.length) return; const i = (S.loopIdx + 1) % ps.length; this.ppOffset = Math.max(0, ps[i].a - 0.5); this.ppStart = performance.now(); this.lastBeat = this.ppOffset - 0.01; this.setState({ loopIdx: i }); },
       ppCanvas: this.ppCanvas,
-      ppGlyph: S.ppPlaying ? '❙❙' : '▶',
+      ppIsPlaying: !!S.ppPlaying, ppIsPaused: !S.ppPlaying,
       ppToggle: () => { this.acResume(); if (S.ppPlaying) { this.ppOffset = this.ppBeat(); this.setState({ ppPlaying: false }); } else { this.acResume(); this.ppStart = performance.now(); this.lastBeat = this.ppOffset - 0.01; this.setState({ ppPlaying: true }); } },
       ppDown: e => { this.dragging = true; this.dragX = e.clientX; this.dragBeat = this.ppBeat(); e.target.setPointerCapture(e.pointerId); e.target.style.cursor = 'grabbing'; },
       ppMove: e => { if (!this.dragging) return; const b = Math.max(0, Math.min(this.C.TOTAL, this.dragBeat - (e.clientX - this.dragX) / 56)); this.ppOffset = b; this.ppStart = performance.now(); this.lastBeat = b - 0.01; },
@@ -641,10 +729,10 @@ class Component extends DCLogic {
       ppVoices: ids.map(id => ({
         label: PARTS[id].name + (S.mutes[id] ? ' — off' : ''),
         pick: () => this.setState({ mutes: { ...S.mutes, [id]: !S.mutes[id] } }),
-        style: { ...btn(!S.mutes[id]), background: S.mutes[id] ? 'transparent' : PARTS[id].color, border: S.mutes[id] ? '1px dashed #a89877' : '1px solid ' + PARTS[id].color, color: S.mutes[id] ? '#a89877' : '#fbf6ec', borderRadius: '8px 0 0 8px', borderRight: 'none' },
+        style: { ...btn(!S.mutes[id]), background: S.mutes[id] ? 'transparent' : PARTS[id].color, border: S.mutes[id] ? '1px dashed #a89877' : '1px solid ' + PARTS[id].color, color: S.mutes[id] ? '#a89877' : '#fbf6ec', borderRadius: '8px 0 0 8px', borderRight: 'none', boxShadow: S.mutes[id] ? '0 2px 0 #d5c1a0, 0 3px 6px rgba(47,36,25,.12)' : 'inset 0 -2px 0 rgba(0,0,0,.22)' },
         oct: () => this.setState({ octDown: { ...S.octDown, [id]: !S.octDown[id] } }),
         octLabel: S.octDown[id] ? '8vb' : '8va',
-        octStyle: { border: '1px ' + (S.mutes[id] ? 'dashed #a89877' : 'solid ' + PARTS[id].color), borderRadius: '0 8px 8px 0', background: S.octDown[id] ? '#2f2419' : 'transparent', color: S.octDown[id] ? '#fbf6ec' : (S.mutes[id] ? '#7f6d55' : PARTS[id].color), fontSize: '13px', padding: '0 9px', cursor: 'pointer', fontFamily: "'EB Garamond', serif", letterSpacing: '.03em' }
+        octStyle: { border: '1px ' + (S.mutes[id] ? 'dashed #a89877' : 'solid ' + PARTS[id].color), borderLeft: S.mutes[id] ? 'none' : '1px solid rgba(251,246,236,.45)', borderRadius: '0 8px 8px 0', background: S.mutes[id] ? 'transparent' : (S.octDown[id] ? '#2f2419' : PARTS[id].color), color: S.mutes[id] ? '#a89877' : '#fbf6ec', fontSize: '13px', padding: '0 9px', cursor: 'pointer', fontFamily: "'EB Garamond', serif", letterSpacing: '.03em', boxShadow: S.mutes[id] ? '0 2px 0 #d5c1a0, 0 3px 6px rgba(47,36,25,.12)' : 'inset 0 -2px 0 rgba(0,0,0,.22)' }
       })),
       ppAlong: ['capo1','capo3','real'].includes(S.playOpt),
       speedVal: S.speed,

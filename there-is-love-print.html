@@ -23,7 +23,7 @@ p,h1,h2{text-wrap:pretty;margin:0;}
     <img src="assets/agapic-logo.jpg" alt="Agapic Chants" style="width:38px;height:38px;object-fit:cover;border-radius:50%;display:block;margin:0 auto 5px;" />
     <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#7d6a51;">Agapic Chants · Chantbook</div>
     <h1 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:36px;line-height:1.1;margin-top:8px;">There Is Love, You Are Loved</h1>
-    <p style="font-style:italic;color:#5c4b38;font-size:16px;margin-top:4px;">with Caro and Vivian · in {{ keyName }}</p>
+    <p style="font-style:italic;color:#5c4b38;font-size:16px;margin-top:4px;">with Caro and Vivian{{ keyLine }}</p>
   </div>
   <div style="margin:22px auto 0;max-width:460px;border-top:1px solid #c9b48f;border-bottom:1px solid #c9b48f;padding:8px 8px;text-align:center;">
     <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#96754c;">Where to put your attention</div>
@@ -114,6 +114,7 @@ class Component extends DCLogic {
     if (qp !== null && !isNaN(+qp)) key = ((+qp) % 12 + 12) % 12;
     const boxesOn = params.get('boxes') === '1';
     const ins = params.get('ins') || 'guitar';
+    const isVoice = ins === 'mic' || ins === 'voice';
     const capoQ = parseInt(params.get('capo') || '0', 10);
     const capo = (ins === 'guitar' && !isNaN(capoQ)) ? Math.max(0, Math.min(11, capoQ)) : 0;
     const sKey = ((key - capo) % 12 + 12) % 12;
@@ -130,13 +131,14 @@ class Component extends DCLogic {
     ];
     return {
       keyName: NOTES[key],
-      showBoxRow: !boxesOn,
-      chordRowStyle: boxesOn
+      keyLine: isVoice ? '' : ' \u00b7 in ' + NOTES[key],
+      showBoxRow: !isVoice && !boxesOn,
+      chordRowStyle: isVoice ? { display: 'none' } : boxesOn
         ? { display: 'flex', flexDirection: 'column', alignItems: 'stretch', textAlign: 'center', width: 'max-content', justifyContent: 'flex-end', gap: '0px', minHeight: '40px', fontSize: '11px', fontWeight: 600, color: '#a8451f', lineHeight: 1.1 }
         : { display: 'flex', alignItems: 'center', gap: '4px', minHeight: '21px', fontSize: '16px', fontWeight: 600, color: '#a8451f', lineHeight: 1 },
-      stanzas: L.map(st => st.map(ln => ln.map(([sym, tx]) => ({ ch: sym ? name(sym) : '', box: boxesOn && sym ? dia(sym, true) : null, tx })))),
+      stanzas: L.map(st => st.map(ln => ln.map(([sym, tx]) => ({ ch: (sym && !isVoice) ? name(sym) : '', box: !isVoice && boxesOn && sym ? dia(sym, true) : null, tx })))),
       boxes: ['I','IV'].map(sym => ({ name: name(sym), el: dia(sym, false) })),
-      shapeNote: capo > 0 ? 'Capo on fret ' + capo + ' — these shapes sound in ' + NOTES[key] : isPiano ? 'Keyboard voicings for the key of ' + NOTES[key] : isUke ? 'Ukulele shapes for the key of ' + NOTES[key] : (key === 5 ? 'Guitar shapes in F as recorded — or capo 1 and play E shapes (E · A)' : 'Guitar shapes for the key of ' + NOTES[key])
+      shapeNote: isVoice ? '' : capo > 0 ? 'Capo on fret ' + capo + ' — these shapes sound in ' + NOTES[key] : isPiano ? 'Keyboard voicings for the key of ' + NOTES[key] : isUke ? 'Ukulele shapes for the key of ' + NOTES[key] : (key === 5 ? 'Guitar shapes in F as recorded — or capo 1 and play E shapes (E · A)' : 'Guitar shapes for the key of ' + NOTES[key])
     };
   }
 }
