@@ -632,10 +632,10 @@ class Component extends DCLogic {
     let playCards = [], playSubs = null, playDetail = '';
     if (ins === 'guitar' || ins === 'ukulele') {
       playCards = [
-        { title: 'I\u2019m a total beginner', body: 'One press sets everything up: easy open shapes, no capo, no tuning.', style: optBtn(S.playOpt === 'beginner'), pick: () => { this.setState({ playOpt: 'beginner', showMinis: true, capoOn: false, capo: 0 }); setKey(7, ''); } },
+        { title: 'I\u2019m a total beginner', body: 'One press sets everything up: easy open shapes, no capo, no tuning.', style: optBtn(S.playOpt === 'beginner'), pick: () => { this.setState({ playOpt: 'beginner', showMinis: true, capoOn: false, capo: 0 }); setKey(9, ''); } },
         { title: 'Play along with the recording', body: 'Match the exact pitch of the recording (B♭).', style: optBtn(recOn), pick: () => { if (ins === 'guitar') { this.setState({ playOpt: 'capo3', capoOn: true, capo: 3, key: 10, keyNote: '' }); } else { this.setState({ playOpt: 'real' }); setKey(10, ''); } } }
       ];
-      if (S.playOpt === 'beginner') playDetail = 'You\u2019re set — playing in G with G · C · F. The shapes are below.';
+      if (S.playOpt === 'beginner') playDetail = 'You\u2019re set — playing in A with A · D · G. The shapes are below.';
       if (recOn && ins === 'guitar') {
         const sub = (label, id, fret) => ({ label, style: btn(S.playOpt === id), pick: () => this.setState({ playOpt: id, capoOn: true, capo: fret, key: 10, keyNote: '' }) });
         playSubs = [sub('Capo on fret 3', 'capo3', 3), sub('Capo on fret 1', 'capo1', 1)];
