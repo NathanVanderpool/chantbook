@@ -194,7 +194,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 
 </main>
 
-<section id="harmony" style="margin-top:56px;padding:0 24px 56px;">
+<section id="harmony" style="margin-top:56px;padding:44px 24px 56px;background:#efe4d0;border-top:1px solid #d5c1a0;border-bottom:1px solid #d5c1a0;">
   <div style="max-width:820px;margin:0 auto;">
     <div style="font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:#7d6a51;">Learn a harmony</div>
     <details style="margin-top:8px;max-width:640px;">
@@ -710,7 +710,7 @@ class Component extends DCLogic {
         ? { display: 'flex', flexDirection: 'column', alignItems: 'stretch', textAlign: 'center', width: 'max-content', gap: '3px', minHeight: '86px', justifyContent: 'flex-end', fontSize: '17px', fontWeight: 700, color: '#cf6038', letterSpacing: '.04em', fontFamily: "'EB Garamond', serif", lineHeight: 1 }
         : { display: 'flex', alignItems: 'center', gap: '6px', minHeight: '30px', fontSize: '24px', fontWeight: 700, color: '#cf6038', letterSpacing: '.02em', fontFamily: "'EB Garamond', serif", lineHeight: 1 }) : { display: 'none' },
       lyricStanzas: (() => { const TOK = this.tok(); return LYRICS.map((stz, zi) => stz.map((line, lj) => ({
-        segs: line.map(([sym, tx], si) => ({ ch: chordsOn && sym ? this.chordName(sym) : '', box: (minisOn && !stripMode && sym) ? miniBox(sym) : null, tx, words: ((TOK.stanzas[zi] || [])[lj] || [])[si] ? TOK.stanzas[zi][lj][si].parts : [{ tx, w: -1 }] })),
+        segs: line.map(([sym, tx], si) => ({ ch: (chordsOn && sym && !stripMode) ? this.chordName(sym) : '', box: (minisOn && !stripMode && sym) ? miniBox(sym) : null, tx, words: ((TOK.stanzas[zi] || [])[lj] || [])[si] ? TOK.stanzas[zi][lj][si].parts : [{ tx, w: -1 }] })),
         chords: stripMode ? line.filter(seg => seg[0]).map(seg => ({ ch: this.chordName(seg[0]), box: miniBox(seg[0]) })) : [],
         showStrip: stripMode && line.some(seg => seg[0])
       }))); })(),
