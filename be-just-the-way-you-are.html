@@ -632,20 +632,20 @@ class Component extends DCLogic {
     let playCards = [], playSubs = null, playDetail = '';
     if (ins === 'guitar' || ins === 'ukulele') {
       playCards = [
-        { title: 'I\u2019m a total beginner', body: 'One press sets everything up: easy open shapes, no capo, no tuning.', style: optBtn(S.playOpt === 'beginner'), pick: () => { this.setState({ playOpt: 'beginner', showMinis: true }); setKey(7, ''); } },
-        { title: 'Play along with the recording', body: 'Match the exact pitch of the recording (B♭).', style: optBtn(recOn), pick: () => { if (ins === 'guitar') { this.setState({ playOpt: 'capo3' }); setKey(7, 'G shapes, capo on fret 3'); } else { this.setState({ playOpt: 'real' }); setKey(10, ''); } } }
+        { title: 'I\u2019m a total beginner', body: 'One press sets everything up: easy open shapes, no capo, no tuning.', style: optBtn(S.playOpt === 'beginner'), pick: () => { this.setState({ playOpt: 'beginner', showMinis: true, capoOn: false, capo: 0 }); setKey(7, ''); } },
+        { title: 'Play along with the recording', body: 'Match the exact pitch of the recording (B♭).', style: optBtn(recOn), pick: () => { if (ins === 'guitar') { this.setState({ playOpt: 'capo3', capoOn: true, capo: 3, key: 10, keyNote: '' }); } else { this.setState({ playOpt: 'real' }); setKey(10, ''); } } }
       ];
       if (S.playOpt === 'beginner') playDetail = 'You\u2019re set — playing in G with G · C · F. The shapes are below.';
       if (recOn && ins === 'guitar') {
-        const sub = (label, id, key, note) => ({ label, style: btn(S.playOpt === id), pick: () => { this.setState({ playOpt: id }); setKey(key, note); } });
-        playSubs = [sub('Capo on fret 3', 'capo3', 7, ''), sub('Capo on fret 1', 'capo1', 9, '')];
+        const sub = (label, id, fret) => ({ label, style: btn(S.playOpt === id), pick: () => this.setState({ playOpt: id, capoOn: true, capo: fret, key: 10, keyNote: '' }) });
+        playSubs = [sub('Capo on fret 3', 'capo3', 3), sub('Capo on fret 1', 'capo1', 1)];
         playDetail = S.playOpt === 'capo1' ? 'Put a capo on fret 1 and play the A shapes — A · D · G.' : 'Put a capo on fret 3 and play the G shapes — G · C · F. The boxes below show the shapes.';
       }
       if (recOn && ins === 'ukulele') playDetail = 'Playing in B\u266d as recorded — the boxes below show the shapes.';
     }
     if (ins === 'piano') {
       playCards = [
-        { title: 'I\u2019m a total beginner', body: 'One press puts the chant in G, where every chord is white keys only.', style: optBtn(S.playOpt === 'beginner'), pick: () => { this.setState({ playOpt: 'beginner', showMinis: true }); setKey(7, ''); } },
+        { title: 'I\u2019m a total beginner', body: 'One press puts the chant in G, where every chord is white keys only.', style: optBtn(S.playOpt === 'beginner'), pick: () => { this.setState({ playOpt: 'beginner', showMinis: true, capoOn: false, capo: 0 }); setKey(7, ''); } },
         { title: 'Play along with the recording', body: 'Match the exact pitch of the recording (B♭).', style: optBtn(S.playOpt === 'real'), pick: () => { this.setState({ playOpt: 'real' }); setKey(10, ''); } }
       ];
       if (S.playOpt === 'beginner') playDetail = 'You\u2019re set — playing in G with G · C · F. Play them with white keys only — no black notes anywhere in the chant.';
