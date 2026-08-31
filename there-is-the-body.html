@@ -340,7 +340,7 @@ class Component extends DCLogic {
       A: { color: '#7d8b6a', name: 'Harmony 1', ev: [] },
       T: { color: '#b08c3f', name: 'Harmony 2', ev: [] }
     };
-    this._C = { NOTES, DEG, GUITAR, UKE, LYRICS, PARTS, BPM: 70, TOTAL: 88 };
+    this._C = { NOTES, DEG, GUITAR, UKE, LYRICS, PARTS, BPM: 105, TOTAL: 88 };
     return this._C;
   }
   capoShift() { return (this.state.capoOn && this.state.instrument === 'guitar') ? (this.state.capo || 0) : 0; }
